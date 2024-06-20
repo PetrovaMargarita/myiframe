@@ -1,9 +1,7 @@
 const pipedrive = require('pipedrive');
 require('dotenv').config();
 const defaultClient = new pipedrive.ApiClient();
-// Прямое указание API ключа
-const key = '2fa5095f3ba3911496e097a4cfde2f150e097539';
-defaultClient.authentications.api_key.apiKey = key;
+defaultClient.authentications.api_key.apiKey = process.env.PIPEDRIVE_API_KEY;
 
 module.exports = (req, res) => {
     // Добавление заголовков CORS
