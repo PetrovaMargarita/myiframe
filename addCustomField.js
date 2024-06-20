@@ -1,48 +1,56 @@
+const express = require('express');
+const bodyParser = require('body-parser');
 const pipedrive = require('pipedrive');
-require('dotenv').config();
+
+const app = express();
+const port = process.env.PORT || 3000;
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// Настройка API Pipedrive
 const defaultClient = new pipedrive.ApiClient();
 defaultClient.authentications.api_key.apiKey = process.env.PIPEDRIVE_API_KEY;
 
-module.exports = (req, res) => {
-    // Добавление заголовков CORS
-    res.setHeader('Access-Control-Allow-Origin', '*');
-res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-res.setHeader('Access-Control-Allow-Credentials', true);
+// Экземпляр API для полей сделок
+const dealFieldsApi = new pipedrive.DealFieldsApi(defaultClient);
 
+// Маршрут для обработки отправки формы
+app.post('/add-custom-deal-field', async (req, res) => {
+    try {
+        const { firstName, lastName } = req.body;
 
-    // Если это preflight запрос, просто завершите его
-    if (req.method === 'OPTIONS') {
-        res.status(200).end();
-        return;
-    }
-
-    const { firstName, lastName, dealId } = req.body;
-
-    const api = new pipedrive.DealFieldsApi(defaultClient);
-    api.addDealField({
-        name: 'First Name',
-        field_type: 'varchar',
-    }).then(firstNameFieldResponse => {
-        const firstNameFieldKey = firstNameFieldResponse.data.key;
-
-        return api.addDealField({
-            name: 'Last Name',
-            field_type: 'varchar',
-        }).then(lastNameFieldResponse => {
-            const lastNameFieldKey = lastNameFieldResponse.data.key;
-
-            const dealsApi = new pipedrive.DealsApi(defaultClient);
-            const updateData = {
-                [firstNameFieldKey]: firstName,
-                [lastNameFieldKey]: lastName,
-            };
-
-            return dealsApi.updateDeal(dealId, updateData);
+        // Создание новых пользовательских полей сделки
+        const responseFirstName = await dealFieldsApi.addDealField({
+            name: 'First Name',
+            field_type: 'text',
         });
-    }).then(updatedDeal => {
-        res.status(200).json({ message: 'Deal updated successfully', data: updatedDeal });
-    }).catch(error => {
-        res.status(500).json({ message: 'Failed to add or update fields', error });
-    });
-};
+
+        const responseLastName = await dealFieldsApi.addDealField({
+            name: 'Last Name',
+            field_type: 'text',
+        });
+
+        // Предположим, что у нас есть существующий ID сделки
+        const dealId = 1; // Замените на ваш фактический ID сделки
+
+        // Обновление существующей сделки значениями пользовательских полей
+        const updateDealResponse = await dealFieldsApi.updateDeal({
+            id: dealId,
+            body: {
+                [responseFirstName.data.key]: firstName,
+                [responseLastName.data.key]: lastName,
+            },
+        });
+
+        res.status(200).json(updateDealResponse);
+    } catch (error) {
+        console.error('Ошибка при добавлении пользовательских полей:', error);
+        res.status(500).json({ error: 'Не удалось добавить пользовательские поля' });
+    }
+});
+
+// Запуск сервера
+app.listen(port, () => {
+    console.log(`Сервер запущен на http://localhost:${port}`);
+});
