@@ -28,7 +28,7 @@
                         const sdk = await new AppExtensionsSdk().initialize({ size: { height: 500, width: 500 } });
                         console.log('SDK initialized:', sdk);
 
-                        ddocument.getElementById('dealForm').addEventListener('submit', async function(event) {
+                        document.getElementById('dealForm').addEventListener('submit', async function(event) {
                             event.preventDefault();
                             
                             const firstName = document.getElementById('firstName').value;
