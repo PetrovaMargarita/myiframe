@@ -16,7 +16,7 @@ defaultClient.authentications.api_key.apiKey = process.env.PIPEDRIVE_API_KEY;
 const dealFieldsApi = new pipedrive.DealFieldsApi(defaultClient);
 
 // Маршрут для обработки отправки формы
-app.post('/add-custom-deal-field', async (req, res) => {
+app.post('/add-custom-deal-fields', async (req, res) => {
     try {
         const { firstName, lastName } = req.body;
 
