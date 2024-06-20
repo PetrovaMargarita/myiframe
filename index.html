@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom UI: Basic HTML example</title>
+</head>
+<body>
+    <h1>Hello from Custom UI</h1>
+    
+    <form id="dealForm">
+        <label for="firstName">First Name:</label>
+        <input type="text" id="firstName" name="firstName" required><br><br>
+        <label for="lastName">Last Name:</label>
+        <input type="text" id="lastName" name="lastName" required><br><br>
+        <input type="submit" value="Submit">
+    </form>
+
+    <button id="myButton">Close</button>
+
+    <footer>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@pipedrive/app-extensions-sdk@0.2.0-rc.0/dist/index.umd.js"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                setTimeout(async function() {
+                    try {
+                        const sdk = await new AppExtensionsSdk().initialize({ size: { height: 500, width: 500 } });
+                        console.log('SDK initialized:', sdk);
+
+                        document.getElementById('dealForm').addEventListener('submit', async function(event) {
+                            event.preventDefault();
+
+                            const firstName = document.getElementById('firstName').value;
+                            const lastName = document.getElementById('lastName').value;
+                            const dealId = 1;
+
+                            try {
+                                // Замените 'https://your-app-name.vercel.app' на URL вашего развернутого сервера на Vercel
+                                const response = await axios.post('https://modal-rita.vercel.app/addCustomField', {
+                                    firstName,
+                                    lastName,
+                                    dealId
+                                });
+
+                                if (response.status === 200) {
+                                    console.log(response.data.message, response.data.data);
+                                 
+                                } else {
+                                    console.error(response.data.message, response.data.error);
+                                }
+                            } catch (error) {
+                                console.error('Failed to update deal:', error);
+                                
+                            }
+                        });
+
+                        document.getElementById('myButton').addEventListener('click', async () => {
+                            try {
+                                await sdk.execute(AppExtensionsSdk.Command.CLOSE_MODAL);
+                                console.log("Modal closed successfully");
+                            } catch (error) {
+                                console.error("Error closing modal:", error);
+                            }
+                        });
+                    } catch (error) {
+                        console.error('Failed to initialize SDK:', error);
+                    }
+                }, 5000);
+            });
+        </script>
+    </footer>
+</body>
+</html>
