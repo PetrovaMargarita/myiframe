@@ -13,6 +13,8 @@
         <input type="text" id="firstName" name="firstName" required><br><br>
         <label for="lastName">Last:</label>
         <input type="text" id="lastName" name="lastName" required><br><br>
+        <label for="dealId">Deal ID:</label>
+        <input type="text" id="dealId" name="dealId" required><br><br>
         <button type="button" id="updateDealButton">Update Deal</button>
     </form>
 
@@ -23,8 +25,10 @@
         <script src="https://cdn.jsdelivr.net/npm/@pipedrive/app-extensions-sdk@0.2.0-rc.0/dist/index.umd.js"></script>
         <script>
             document.addEventListener('DOMContentLoaded', function() {
-                const apiKey = '2fa5095f3ba3911496e097a4cfde2f150e097539';
-                const baseUrl = 'https://testrita-sandbox.pipedrive.com/api/v1';
+                const companyDomain = 'testrita-sandbox';
+                const apiToken = '2fa5095f3ba3911496e097a4cfde2f150e097539';
+                const baseUrl = `https://${companyDomain}.pipedrive.com/api/v1`;
+
                 setTimeout(async function() {
                     try {
                         const sdk = await new AppExtensionsSdk().initialize({ size: { height: 500, width: 500 } });
@@ -32,33 +36,36 @@
 
                         async function updateDealWithCustomFields(dealId, firstName, lastName) {
                             try {
-                                console.log('Sending request to add custom fields...');
+                                console.log('Отправка запроса для добавления пользовательских полей...');
                                 
-                                // Add custom fields to Pipedrive
-                                const firstNameFieldRes = await axios.post(`${baseUrl}/dealFields?api_token=${apiKey}`, {
+                                // Добавляем пользовательские поля в Pipedrive
+                                const firstNameFieldRes = await axios.post(`${baseUrl}/dealFields?api_token=${apiToken}`, {
                                     name: 'First Name',
                                     field_type: 'varchar'
                                 });
 
-                                const lastNameFieldRes = await axios.post(`${baseUrl}/dealFields?api_token=${apiKey}`, {
+                                const lastNameFieldRes = await axios.post(`${baseUrl}/dealFields?api_token=${apiToken}`, {
                                     name: 'Last Name',
                                     field_type: 'varchar'
                                 });
+                                
                                 let firstNameFieldId = firstNameFieldRes.data.data.id;
                                 let lastNameFieldId = lastNameFieldRes.data.data.id;
 
-                                console.log('First Name Field ID:', firstNameFieldId);
-                                console.log('Last Name Field ID:', lastNameFieldId);
+                                console.log('ID:', firstNameFieldId);
+                                console.log('ID:', lastNameFieldId);
                                 
-                               const updatedDeal = await axios.put(`${baseUrl}/deals/${dealId}?api_token=${apiKey}`, {
+                                // Обновляем существующую сделку с пользовательскими полями
+                                const url = `${baseUrl}/deals/${dealId}?api_token=${apiToken}`;
+                                const updatedDeal = await axios.put(url, {
                                     [firstNameFieldId]: firstName,
                                     [lastNameFieldId]: lastName
                                 });
                                 console.log(updatedDeal);
-                                
-                            
+
+                                console.log('Пользовательские поля успешно добавлены в существующую сделку!', updatedDeal.data);
                             } catch (err) {
-                                console.log('Updating failed', err.response?.data || err);
+                                console.log('Обновление не удалось', err.response?.data || err);
                             }
                         }
 
@@ -74,13 +81,13 @@
                         document.getElementById('myButton').addEventListener('click', async () => {
                             try {
                                 await sdk.execute(AppExtensionsSdk.Command.CLOSE_MODAL);
-                                console.log("Modal closed successfully");
+                                console.log("Модальное окно успешно закрыто");
                             } catch (error) {
-                                console.error("Error closing modal:", error);
+                                console.error("Ошибка при закрытии модального окна:", error);
                             }
                         });
                     } catch (error) {
-                        console.error('Failed to initialize SDK:', error);
+                        console.error('Не удалось инициализировать SDK:', error);
                     }
                 }, 5000);
             });
