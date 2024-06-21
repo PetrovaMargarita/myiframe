@@ -69,7 +69,6 @@
 
                             // Поиск нужного поля по имени
                             const appointedManagerField = dealFields.find(field => field.name === 'First Name');
-                             // const appointedManagerField = dealFields.find(field => field.id === '96');
                             console.log(appointedManagerField);
 
                             // Обновление сделки
@@ -84,10 +83,6 @@
                                 }
                             });
                             console.log('NEW', updatedDealResponse);
-                            // const updateRes = await axios.put(`${baseUrl}/deals/${dealId}`, updateData, {
-                            //     headers: { 'Content-Type': 'application/json' },
-                            //     params: { api_token: apiToken }
-                            // });
 
                             console.log('Deal updated:', updatedDealResponse.data);
                         } catch (err) {
