@@ -1,24 +1,120 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Custom UI: Basic HTML example</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bootstrap Form Layout</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    /* Добавляем стили для установки одинаковой высоты и ширины блоков */
+    .custom-block {
+      height: 300px; /* Высота блоков */
+      width: 100%; /* Ширина блоков */
+      padding: 20px; /* Отступы внутри блоков */
+    }
+  </style>
 </head>
 <body>
-    <h1>Hello from Custom UI</h1>
-    
     <form id="dealForm">
-        <label for="firstName">First:</label>
-        <input type="text" id="firstName" name="firstName" required><br><br>
-        <label for="lastName">Last:</label>
-        <input type="text" id="lastName" name="lastName" required><br><br>
-        <button type="button" id="updateDealButton">Update Deal</button>
-    </form>
+  <div class="container">
+    <div class="row mt-3">
+      <!-- Первый блок: Детали клиента -->
+      <div class="col-md-6">
+        <div class="custom-block border">
+          <h5>Детали клиента</h5>
+          <div class="form-row">
+            <div class="col">
+              <input type="text" class="form-control" placeholder="Имя">
+            </div>
+            <div class="col">
+              <input type="text" class="form-control" placeholder="Фамилия">
+            </div>
+          </div>
+          <br>
+          <input type="text" class="form-control" placeholder="Телефон">
+          <br>
+          <input type="email" class="form-control" placeholder="Почта">
+        </div>
+      </div>
+      <!-- Второй блок: Детали задачи -->
+      <div class="col-md-6">
+        <div class="custom-block border">
+          <h5>Детали задачи</h5>
+          <div class="form-row">
+            <div class="col">
+              <select class="form-control">
+                <option selected>Тип задачи</option>
+                <option>Задача 1</option>
+                <option>Задача 2</option>
+              </select>
+            </div>
+            <div class="col">
+              <select class="form-control">
+                <option selected>Источник задачи</option>
+                <option>Источник 1</option>
+                <option>Источник 2</option>
+              </select>
+            </div>
+          </div>
+          <br>
+          <textarea class="form-control" rows="4" placeholder="Описание задачи"></textarea>
+        </div>
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <!-- Третий блок: Место расположения -->
+      <div class="col-md-6">
+        <div class="custom-block border">
+          <h5>Место расположения</h5>
+          <input type="text" class="form-control" placeholder="Страна">
+          <br>
+          <input type="text" class="form-control" placeholder="Область">
+          <br>
+          <div class="form-row">
+            <div class="col">
+              <input type="text" class="form-control" placeholder="Город">
+            </div>
+            <div class="col">
+              <input type="text" class="form-control" placeholder="Зип код">
+            </div>
+          </div>
+          <br>
+          <input type="text" class="form-control" placeholder="Арреа">
+        </div>
+      </div>
+      <!-- Четвертый блок: Время -->
+      <div class="col-md-6">
+        <div class="custom-block border">
+          <h5>Время</h5>
+          <input type="date" class="form-control" placeholder="Дата старта">
+          <br>
+          <div class="form-row">
+            <div class="col">
+              <input type="time" class="form-control" placeholder="Начало времени">
+            </div>
+            <div class="col">
+              <input type="time" class="form-control" placeholder="Конец времени">
+            </div>
+          </div>
+          <br>
+          <select class="form-control">
+            <option selected>Виталий Амуров</option>
+            <option>Другой человек</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <button type="button" id="updateDealButton">Update Deal</button>
+  </div>
+   </form>
 
-    <button id="myButton">Close</button>
+  <button id="myButton">Close</button>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+  <!-- Bootstrap JS and dependencies (not necessary for layout) -->
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@pipedrive/app-extensions-sdk@0.2.0-rc.0/dist/index.umd.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
