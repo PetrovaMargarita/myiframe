@@ -39,9 +39,9 @@
               </div>
             </div>
             <br>
-            <input type="text" class="form-control" placeholder="Телефон" required>
+            <input type="text" class="form-control" id="phone" placeholder="Телефон" required>
             <br>
-            <input type="email" class="form-control" placeholder="Почта" required>
+            <input type="email" class="form-control" id="email" placeholder="Почта" required>
           </div>
         </div>
         <!-- Второй блок: Детали задачи -->
@@ -50,14 +50,14 @@
             <h5>Детали задачи</h5>
             <div class="form-row">
               <div class="col">
-                <select class="form-control" required>
+                <select class="form-control" id="taskType" required>
                   <option value="" disabled selected>Тип задачи</option>
                   <option>Задача 1</option>
                   <option>Задача 2</option>
                 </select>
               </div>
               <div class="col">
-                <select class="form-control" required>
+                <select class="form-control" id="taskSource" required>
                   <option value="" disabled selected>Источник задачи</option>
                   <option>Источник 1</option>
                   <option>Источник 2</option>
@@ -65,7 +65,7 @@
               </div>
             </div>
             <br>
-            <textarea class="form-control" rows="4" placeholder="Описание задачи" required></textarea>
+            <textarea class="form-control" rows="4" id="taskDescription"  placeholder="Описание задачи" required></textarea>
           </div>
         </div>
       </div>
@@ -75,38 +75,38 @@
         <div class="col-md-6">
           <div class="custom-block border">
             <h5>Место расположения</h5>
-            <input type="text" class="form-control" placeholder="Страна" required>
+            <input type="text" class="form-control" id="country"  placeholder="Страна" required>
             <br>
-            <input type="text" class="form-control" placeholder="Область" required>
+            <input type="text" class="form-control" id="region"  placeholder="Область" required>
             <br>
             <div class="form-row">
               <div class="col">
-                <input type="text" class="form-control" placeholder="Город" required>
+                <input type="text" class="form-control" id="city"  placeholder="Город" required>
               </div>
               <div class="col">
-                <input type="text" class="form-control" placeholder="Зип код" required> 
+                <input type="text" class="form-control" id="zipCode"  placeholder="Зип код" required> 
               </div>
             </div>
             <br>
-            <input type="text" class="form-control" placeholder="Арреа" required>
+            <input type="text" class="form-control" id="area"  placeholder="Арреа" required>
           </div>
         </div>
         <!-- Четвертый блок: Время -->
         <div class="col-md-6">
           <div class="custom-block border">
             <h5>Время</h5>
-            <input type="date" class="form-control" placeholder="Дата старта" required>
+            <input type="date" class="form-control" id="startDate"  placeholder="Дата старта" required>
             <br>
             <div class="form-row">
               <div class="col">
-                <input type="time" class="form-control" placeholder="Начало времени" required>
+                <input type="time" class="form-control" id="startTime" placeholder="Начало времени" required>
               </div>
               <div class="col">
-                <input type="time" class="form-control" placeholder="Конец времени" required>
+                <input type="time" class="form-control" id="endTime" placeholder="Конец времени" required>
               </div>
             </div>
             <br>
-            <select class="form-control" required>
+            <select class="form-control" id="assignedTo" required>
               <option value="" disabled selected>Виталий Амуров</option>
               <option>Другой человек</option>
             </select>
