@@ -59,7 +59,7 @@
 
                                 // Обновляем существующую сделку с новыми значениями пользовательских полей
                                 const dealId = 1; // Здесь нужно указать ID существующей сделки
-                                const updateDealRes = await axios.put(`https://api.pipedrive.com/v1/deals/:dealId??api_token=${apiToken}`, {
+                                const updateDealRes = await axios.put(`https://api.pipedrive.com/v1/deals/:1?api_token=${apiToken}`, {
                                     [firstNameFieldId]: firstName,
                                     [lastNameFieldId]: lastName
                                 });
