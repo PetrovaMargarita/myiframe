@@ -131,132 +131,165 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@pipedrive/app-extensions-sdk@0.2.0-rc.0/dist/index.umd.js"></script>
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-  const companyDomain = 'testrita-sandbox';
-  const apiToken = '2fa5095f3ba3911496e097a4cfde2f150e097539';
-  const baseUrl = `https://${companyDomain}.pipedrive.com/api/v1`;
-                  
-  setTimeout(async () => {
-    try {
-      const sdk = await new AppExtensionsSdk().initialize({ size: { height: 700, width: 1000 } });
-      console.log('SDK initialized:', sdk);
+   document.addEventListener('DOMContentLoaded', () => {
+            const companyDomain = 'testrita-sandbox';
+            const apiToken = '2fa5095f3ba3911496e097a4cfde2f150e097539';
+            const baseUrl = `https://${companyDomain}.pipedrive.com/api/v1`;
 
-      async function createOrUpdateDeal(firstName, lastName, phone, email, taskType, taskSource, taskDescription, country, region, city, zipCode, area, startDate, startTime, endTime, assignedTo) {
-        try {
-          // Define fields to create/update in Pipedrive
-          const fields = [
-            { name: 'First Name', type: 'varchar' },
-            { name: 'Last Name', type: 'varchar' },
-            { name: 'Phone', type: 'phone' },
-            { name: 'Email', type: 'email' },
-            { name: 'Task Type', type: 'varchar' },
-            { name: 'Task Source', type: 'varchar' },
-            { name: 'Task Description', type: 'text' },
-            { name: 'Country', type: 'varchar' },
-            { name: 'Region', type: 'varchar' },
-            { name: 'City', type: 'varchar' },
-            { name: 'Zip Code', type: 'varchar' },
-            { name: 'Area', type: 'varchar' },
-            { name: 'Start Date', type: 'date' },
-            { name: 'Start Time', type: 'time' },
-            { name: 'End Time', type: 'time' },
-            { name: 'Assigned To', type: 'varchar' }
-          ];
+            setTimeout(async () => {
+                try {
+                    const sdk = await new AppExtensionsSdk().initialize({ size: { height: 500, width: 500 } });
+                    console.log('SDK initialized:', sdk);
 
-          // Create or update each field in Pipedrive
-          const fieldIds = {};
-          for (const field of fields) {
-            const res = await axios.post(`${baseUrl}/dealFields`, {
-              name: field.name,
-              field_type: field.type,
-              add_visible_flag: true,
-              edit_flag: true
-            }, {
-              params: { api_token: apiToken }
-            });
-            fieldIds[field.name] = res.data.data.id;
-          }
+                    async function createOrUpdateDeal(firstName, lastName, phone, email, taskType, taskSource, taskDescription, country, region, city, zipCode, area, startDate, startTime, endTime, assignedTo) {
+                        try {
+                            const fields = [
+                                { name: 'First Name', type: 'varchar' },
+					            { name: 'Last Name', type: 'varchar' },
+					            { name: 'Phone', type: 'phone' },
+					            { name: 'Email', type: 'email' },
+					            { name: 'Task Type', type: 'varchar' },
+					            { name: 'Task Source', type: 'varchar' },
+					            { name: 'Task Description', type: 'text' },
+					            { name: 'Country', type: 'varchar' },
+					            { name: 'Region', type: 'varchar' },
+					            { name: 'City', type: 'varchar' },
+					            { name: 'Zip Code', type: 'varchar' },
+					            { name: 'Area', type: 'varchar' },
+					            { name: 'Start Date', type: 'date' },
+					            { name: 'Start Time', type: 'time' },
+					            { name: 'End Time', type: 'time' },
+					            { name: 'Assigned To', type: 'varchar' }
+					          ];
 
-          const dealId = 1; // ID сделки, которую нужно обновить (здесь можно указать нужный ID)
-          const updateData = {
-            title: 'Updated Deal with Custom Fields',
-            [fieldIds['First Name']]: firstName,
-            [fieldIds['Last Name']]: lastName,
-            [fieldIds['Phone']]: phone,
-            [fieldIds['Email']]: email,
-            [fieldIds['Task Type']]: taskType,
-            [fieldIds['Task Source']]: taskSource,
-            [fieldIds['Task Description']]: taskDescription,
-            [fieldIds['Country']]: country,
-            [fieldIds['Region']]: region,
-            [fieldIds['City']]: city,
-            [fieldIds['Zip Code']]: zipCode,
-            [fieldIds['Area']]: area,
-            [fieldIds['Start Date']]: startDate,
-            [fieldIds['Start Time']]: startTime,
-            [fieldIds['End Time']]: endTime,
-            [fieldIds['Assigned To']]: assignedTo
-          };
+                            const fieldIds = {};
+                            for (const field of fields) {
+                                const res = await axios.post(`${baseUrl}/dealFields`, {
+                                    name: field.name,
+                                    field_type: field.type,
+                                    add_visible_flag: true,
+                                    edit_flag: true
+                                }, {
+                                    params: { api_token: apiToken }
+                                });
+                                fieldIds[field.name] = res.data.data.id;
+                            }
 
-          // Fetch all deal fields from Pipedrive
-          const fieldsResponse = await axios.get(`${baseUrl}/dealFields`, {
-            params: { api_token: apiToken }
-          });
-          const dealFields = fieldsResponse.data.data;
+                            const dealId = 1;
+                            const updateData = {
+                                title: 'Updated Deal with Custom Fields',
+                                [fieldIds['First Name']]: firstName,
+					            [fieldIds['Last Name']]: lastName,
+					            [fieldIds['Phone']]: phone,
+					            [fieldIds['Email']]: email,
+					            [fieldIds['Task Type']]: taskType,
+					            [fieldIds['Task Source']]: taskSource,
+					            [fieldIds['Task Description']]: taskDescription,
+					            [fieldIds['Country']]: country,
+					            [fieldIds['Region']]: region,
+					            [fieldIds['City']]: city,
+					            [fieldIds['Zip Code']]: zipCode,
+					            [fieldIds['Area']]: area,
+					            [fieldIds['Start Date']]: startDate,
+					            [fieldIds['Start Time']]: startTime,
+					            [fieldIds['End Time']]: endTime,
+					            [fieldIds['Assigned To']]: assignedTo
+					          };
 
-          // Update the deal in Pipedrive
-          const updateResponse = await axios.put(`${baseUrl}/deals/${dealId}`, updateData, {
-            params: { api_token: apiToken },
-            headers: { 'Content-Type': 'application/json' }
-          });
-          console.log('Deal updated successfully:', updateResponse.data);
-        } catch (error) {
-          console.error('Failed to update deal:', error);
-        }
-      }
+                            const fieldsResponse = await axios.get(`${baseUrl}/dealFields`, {
+                                params: {
+                                    api_token: apiToken
+                                }
+                            });
 
-      document.getElementById('dealForm').addEventListener('submit', (event) => {
-        event.preventDefault(); // Prevent default form submission
+                            const dealFields = fieldsResponse.data.data;
+                            console.log('All fields:', dealFields);
 
-        if (event.target.checkValidity()) {
-          // Gather form data
-          const firstName = document.getElementById('firstName').value;
-          const lastName = document.getElementById('lastName').value;
-          const phone = document.getElementById('phone').value;
-          const email = document.getElementById('email').value;
-          const taskType = document.getElementById('taskType').value;
-          const taskSource = document.getElementById('taskSource').value;
-          const taskDescription = document.getElementById('taskDescription').value;
-          const country = document.getElementById('country').value;
-          const region = document.getElementById('region').value;
-          const city = document.getElementById('city').value;
-          const zipCode = document.getElementById('zipCode').value;
-          const area = document.getElementById('area').value;
-          const startDate = document.getElementById('startDate').value;
-          const startTime = document.getElementById('startTime').value;
-          const endTime = document.getElementById('endTime').value;
-          const assignedTo = document.getElementById('assignedTo').value;
+                            // Search for the fields by name
+                            const firstNameField = dealFields.find(field => field.name === 'First Name');
+                            const lastNameField = dealFields.find(field => field.name === 'Last Name');
 
-          // Call function to create or update deal in Pipedrive
-          createOrUpdateDeal(firstName, lastName, phone, email, taskType, taskSource, taskDescription, country, region, city, zipCode, area, startDate, startTime, endTime, assignedTo);
-        } else {
-          console.log('Form validation failed');
-        }
-      });
+                            const phoneField = dealFields.find(field => field.name === 'Phone');
+                            const emailField = dealFields.find(field => field.name === 'Email');
+                            const taskTypeField = dealFields.find(field => field.name === 'Task Type');
+                            const taskSourceField = dealFields.find(field => field.name === 'Task Source');
+                            const taskDescriptionField = dealFields.find(field => field.name === 'Task Description');
+                            const countryField = dealFields.find(field => field.name === ''Country);
+                            const regionField = dealFields.find(field => field.name === 'Region');
+                            const cityField = dealFields.find(field => field.name === 'City');
+                            const zipCodeField = dealFields.find(field => field.name === 'Zip Code');
+                            const areaField = dealFields.find(field => field.name === 'Area');
+                            const startDateField = dealFields.find(field => field.name === 'Start Date');
+                            const startTimeField = dealFields.find(field => field.name === 'Start Time');
+                            const endTimeField = dealFields.find(field => field.name === 'End Time');
+                            const assignedToField = dealFields.find(field => field.name === 'Assigned To');
 
-      document.getElementById('myButton').addEventListener('click', async () => {
-        try {
-          await sdk.execute(AppExtensionsSdk.Command.CLOSE_MODAL);
-          console.log("Modal closed successfully");
-        } catch (error) {
-          console.error("Failed to close modal:", error);
-        }
-      });
-    } catch (error) {
-      console.error('SDK initialization failed:', error);
-    }
-  }, 5000); // Delay initialization to ensure SDK and page are fully loaded
-});
+                            // Update the deal
+                            const updatedDealResponse = await axios.put(`${baseUrl}/deals/${dealId}`, {
+                                [firstNameField.key]: firstName,
+                                [lastNameField.key]: lastName,
+
+                                [phoneField.key]: phone,
+                                [emailField.key]: email,
+                                [taskTypeField.key]: taskType,
+                                [taskSourceField.key]: taskSource,
+                                [taskDescriptionField.key]: taskDescription,
+                                [countryField.key]: country,
+                                [regionField.key]: region,
+                                [cityField.key]: city,
+                                [zipCodeField.key]: zipCode,
+                                [areaField.key]: area,
+                                [startDateField.key]: startDate,
+                                [startTimeField.key]: startTime,
+                                [endTimeField.key]: endTime,
+                                [assignedToField.key]: assignedTo,
+                            }, {
+                                params: {
+                                    api_token: apiToken
+                                },
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                }
+                            });
+                            console.log('Deal updated:', updatedDealResponse.data);
+                        } catch (err) {
+                            console.error('Deal update failed:', err);
+                        }
+                    }
+
+                    document.getElementById('updateDealButton').addEventListener('click', () => {
+                          const firstName = document.getElementById('firstName').value;
+				          const lastName = document.getElementById('lastName').value;
+				          const phone = document.getElementById('phone').value;
+				          const email = document.getElementById('email').value;
+				          const taskType = document.getElementById('taskType').value;
+				          const taskSource = document.getElementById('taskSource').value;
+				          const taskDescription = document.getElementById('taskDescription').value;
+				          const country = document.getElementById('country').value;
+				          const region = document.getElementById('region').value;
+				          const city = document.getElementById('city').value;
+				          const zipCode = document.getElementById('zipCode').value;
+				          const area = document.getElementById('area').value;
+				          const startDate = document.getElementById('startDate').value;
+				          const startTime = document.getElementById('startTime').value;
+				          const endTime = document.getElementById('endTime').value;
+				          const assignedTo = document.getElementById('assignedTo').value;
+                        createOrUpdateDeal(firstName, lastName, phone, email, taskType, taskSource, taskDescription, country, region, city, zipCode, area, startDate, startTime, endTime, assignedTo);
+                    });
+
+                    document.getElementById('myButton').addEventListener('click', async () => {
+                        try {
+                            await sdk.execute(AppExtensionsSdk.Command.CLOSE_MODAL);
+                            console.log("Modal closed successfully");
+                        } catch (error) {
+                            console.error("Failed to close modal:", error);
+                        }
+                    });
+                } catch (error) {
+                    console.error('SDK initialization failed:', error);
+                }
+            }, 5000);
+        });
   </script>
 </body>
 </html>
