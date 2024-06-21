@@ -74,7 +74,7 @@
 
                             // Обновление сделки
                             const updatedDealResponse = await axios.put(`${baseUrl}/deals/${dealId}`, {
-                                [appointedManagerField.key]: 'Joker'
+                                [appointedManagerField.key]: firstName
                             }, {
                                 params: {
                                     api_token: apiToken
