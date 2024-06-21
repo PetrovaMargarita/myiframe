@@ -63,7 +63,7 @@
                                     api_token: apiKey
                                 }
                             });
-                            console.log(fieldsResponse);
+                            console.log('все поля: ', fieldsResponse);
 
                             const updateRes = await axios.put(`${baseUrl}/deals/${dealId}`, updateData, {
                                 headers: { 'Content-Type': 'application/json' },
