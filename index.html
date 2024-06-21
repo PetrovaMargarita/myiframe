@@ -32,10 +32,10 @@
             <h5>Детали клиента</h5>
             <div class="form-row">
               <div class="col">
-                <input type="text" class="form-control" placeholder="Имя" id="firstName" required>
+                <input type="text" class="form-control" placeholder="Имя" id="firstName">
               </div>
               <div class="col">
-                <input type="text" class="form-control" placeholder="Фамилия" id="lastName" required>
+                <input type="text" class="form-control" placeholder="Фамилия" id="lastName">
               </div>
             </div>
             <br>
@@ -200,11 +200,26 @@
             }
           }
 
-          document.getElementById('updateDealButton').addEventListener('click', () => {
-            const firstName = document.getElementById('firstName').value;
-            const lastName = document.getElementById('lastName').value;
-            createOrUpdateDeal(firstName, lastName);
-          });
+          // document.getElementById('updateDealButton').addEventListener('click', () => {
+          //   const firstName = document.getElementById('firstName').value;
+          //   const lastName = document.getElementById('lastName').value;
+          //   createOrUpdateDeal(firstName, lastName);
+          // });
+
+          // Обработчик события отправки формы
+        document.getElementById('dealForm').addEventListener('submit', (event) => {
+        event.preventDefault(); // Предотвращаем стандартное поведение отправки формы
+
+        // Проверяем валидность формы
+        if (event.target.checkValidity()) {
+          const firstName = document.getElementById('firstName').value;
+          const lastName = document.getElementById('lastName').value;
+          createOrUpdateDeal(firstName, lastName);
+        } else {
+          // Если форма не валидна, показываем пользователю сообщение или выполняем нужные действия
+          console.log('Форма не прошла валидацию');
+        }
+      });
 
           document.getElementById('myButton').addEventListener('click', async () => {
             try {
