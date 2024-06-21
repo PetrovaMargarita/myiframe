@@ -13,7 +13,9 @@
         <input type="text" id="firstName" name="firstName" required><br><br>
         <label for="lastName">Last:</label>
         <input type="text" id="lastName" name="lastName" required><br><br>
-        <button type="button" id="createDealButton">Create</button>
+        <label for="dealId">Deal ID:</label>
+        <input type="text" id="dealId" name="dealId" required><br><br>
+        <button type="button" id="updateDealButton">Update Deal</button>
     </form>
 
     <button id="myButton">Close</button>
@@ -22,7 +24,6 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@pipedrive/app-extensions-sdk@0.2.0-rc.0/dist/index.umd.js"></script>
         <script>
-            
             document.addEventListener('DOMContentLoaded', function() {
                 const apiKey = '2fa5095f3ba3911496e097a4cfde2f150e097539';
                 const baseUrl = 'https://testrita-sandbox.pipedrive.com/api/v1/';
@@ -31,50 +32,46 @@
                         const sdk = await new AppExtensionsSdk().initialize({ size: { height: 500, width: 500 } });
                         console.log('SDK initialized:', sdk);
 
-                        async function addNewCustomDealField(firstName, lastName) {
-                        try {
-                            console.log('Sending request to add custom fields...');
-                            
-                             console.log('Проверка', firstName);
-                            // Add custom fields to Pipedrive
-                            const firstNameField = await axios.post(`${baseUrl}/dealFields?api_token=${apiKey}`, {
-                                name: 'First Name',
-                                field_type: 'varchar'
-                            });
-            
-                            const lastNameField = await axios.post(`${baseUrl}/dealFields?api_token=${apiKey}`, {
-                                name: 'Last Name',
-                                field_type: 'varchar'
-                            });
-                            let firstNameFieldId = firstNameFieldRes.data.data.id;
-                            let lastNameFieldId = lastNameFieldRes.data.data.id;
-            
-                            console.log('First Name Field ID:', firstNameFieldId);
-                            console.log('Last Name Field ID:', lastNameFieldId);
-                            
-                            // Create a new deal with the custom fields
-                            const newDeal = await axios.post(`${baseUrl}/deals?api_token=${apiKey}`, {
-                                title: 'New Deal with Custom Fields',
-                                [firstNameFieldId]: firstName,
-                                [lastNameFieldId]: lastName
-                            });
-            
-                            console.log('Custom fields and deal were added successfully!', newDeal.data);
-                        } catch (err) {
-                            console.log('Adding failed', err.response?.data || err);
-                        }
-                    }
+                        async function updateDealWithCustomFields(dealId, firstName, lastName) {
+                            try {
+                                console.log('Sending request to add custom fields...');
+                                
+                                // Add custom fields to Pipedrive
+                                const firstNameFieldRes = await axios.post(`${baseUrl}/dealFields?api_token=${apiKey}`, {
+                                    name: 'First Name',
+                                    field_type: 'varchar'
+                                });
 
-                        function createDeal() {
+                                const lastNameFieldRes = await axios.post(`${baseUrl}/dealFields?api_token=${apiKey}`, {
+                                    name: 'Last Name',
+                                    field_type: 'varchar'
+                                });
+                                let firstNameFieldId = firstNameFieldRes.data.data.id;
+                                let lastNameFieldId = lastNameFieldRes.data.data.id;
+
+                                console.log('First Name Field ID:', firstNameFieldId);
+                                console.log('Last Name Field ID:', lastNameFieldId);
+                                
+                                // Update the existing deal with the custom fields
+                                const updatedDeal = await axios.put(`${baseUrl}/deals/${dealId}?api_token=${apiKey}`, {
+                                    [firstNameFieldId]: firstName,
+                                    [lastNameFieldId]: lastName
+                                });
+
+                                console.log('Custom fields were added successfully to the existing deal!', updatedDeal.data);
+                            } catch (err) {
+                                console.log('Updating failed', err.response?.data || err);
+                            }
+                        }
+
+                        function updateDeal() {
+                            const dealId = 1;
                             const firstName = document.getElementById('firstName').value;
                             const lastName = document.getElementById('lastName').value;
-                            addNewCustomDealField(firstName, lastName);
+                            updateDealWithCustomFields(dealId, firstName, lastName);
                         }
                 
-                        document.getElementById('createDealButton').addEventListener('click', createDeal);
-            
-                    
-                      
+                        document.getElementById('updateDealButton').addEventListener('click', updateDeal);
 
                         document.getElementById('myButton').addEventListener('click', async () => {
                             try {
