@@ -72,10 +72,22 @@
                              // const appointedManagerField = dealFields.find(field => field.id === '96');
                             console.log(appointedManagerField);
 
-                            const updateRes = await axios.put(`${baseUrl}/deals/${dealId}`, updateData, {
-                                headers: { 'Content-Type': 'application/json' },
-                                params: { api_token: apiToken }
+                            // Обновление сделки
+                            const updatedDealResponse = await axios.put(`${baseUrl}/deals/${DEAL_ID}`, {
+                                [appointedManagerField.key]: 'Joker'
+                            }, {
+                                params: {
+                                    api_token: apiKey
+                                },
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                }
                             });
+                            console.log('NEW', updatedDealResponse);
+                            // const updateRes = await axios.put(`${baseUrl}/deals/${dealId}`, updateData, {
+                            //     headers: { 'Content-Type': 'application/json' },
+                            //     params: { api_token: apiToken }
+                            // });
 
                             console.log('Deal updated:', updateRes.data);
                         } catch (err) {
