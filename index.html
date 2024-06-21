@@ -70,9 +70,8 @@
                                             'Content-Type': 'application/x-www-form-urlencoded',
                                         },
                                         body: new URLSearchParams({
-                                            title: 'Updated Deal with Custom Fields',
-                                            [firstNameFieldKey]: firstName,
-                                            [lastNameFieldKey]: lastName
+                                            [firstNameFieldId]: firstName,
+                                            [lastNameFieldId]: lastName
                                         })
                                     });
                                     const updateDealData = await updateDealRes.json();
