@@ -106,7 +106,7 @@
               </div>
             </div>
             <br>
-            <select class="form-control">
+            <select class="form-control" id="assignedTo">
               <option value="Виталий Амуров" selected>Виталий Амуров</option>
               <option value="Арман Самбуров">Арман Самбуров</option>
             </select>
@@ -114,7 +114,7 @@
         </div>
       </div>
 
-      <div class="row centered-buttons" id="assignedTo">
+      <div class="row centered-buttons">
         <div class="col">
           <button class="btn btn-success" type="submit" id="updateDealButton">Создать поля</button>
         </div>
@@ -222,7 +222,7 @@
 		const startTimeField = dealFields.find(field => field.name === 'Start Time');
 		const endTimeField = dealFields.find(field => field.name === 'End Time');
 		const assignedToField = dealFields.find(field => field.name === 'Assigned To');
-              console.log(phoneField, emailField);
+              console.log(phoneField, emailField, assignedToField);
 
               // Update the deal
               const updatedDealResponse = await axios.put(`${baseUrl}/deals/${dealId}`, {
@@ -256,12 +256,7 @@
               console.error('Deal update failed:', err);
             }
           }
-
-          // document.getElementById('updateDealButton').addEventListener('click', () => {
-          //   const firstName = document.getElementById('firstName').value;
-          //   const lastName = document.getElementById('lastName').value;
-          //   createOrUpdateDeal(firstName, lastName);
-          // });
+		console.log(updatedDealResponse);
 
           // Обработчик события отправки формы
         document.getElementById('dealForm').addEventListener('submit', (event) => {
