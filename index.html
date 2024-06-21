@@ -26,8 +26,6 @@
             document.addEventListener('DOMContentLoaded', function() {
                 const apiKey = '2fa5095f3ba3911496e097a4cfde2f150e097539';
                 const baseUrl = 'https://testrita-sandbox.pipedrive.com/api/v1/';
-                let firstNameFieldId = null;
-                let lastNameFieldId = null;
                 setTimeout(async function() {
                     try {
                         const sdk = await new AppExtensionsSdk().initialize({ size: { height: 500, width: 500 } });
@@ -48,8 +46,8 @@
                                 name: 'Last Name',
                                 field_type: 'varchar'
                             });
-                            firstNameFieldId = firstNameFieldRes.data.data.id;
-                            lastNameFieldId = lastNameFieldRes.data.data.id;
+                            let firstNameFieldId = firstNameFieldRes.data.data.id;
+                            let lastNameFieldId = lastNameFieldRes.data.data.id;
             
                             console.log('First Name Field ID:', firstNameFieldId);
                             console.log('Last Name Field ID:', lastNameFieldId);
