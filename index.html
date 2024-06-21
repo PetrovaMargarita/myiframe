@@ -65,7 +65,6 @@
                                 // });
 
                                 
-                                const dealId = '1'; // Замените на ID вашей сделки в Pipedrive
                                 const customFieldsData = {
                                     // Замените на данные из формы ввода
                                     // Пример:
@@ -80,7 +79,7 @@
 
                                 
 
-                                console.log('Сделка успешно обновлена с новыми значениями пользовательских полей!', updateDealRes.data);
+                                console.log('Сделка успешно обновлена с новыми значениями пользовательских полей!', response.data);
                             } catch (err) {
                                 console.log('Обновление сделки не удалось', err.response?.data || err);
                             }
