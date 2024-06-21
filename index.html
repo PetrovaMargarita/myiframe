@@ -50,20 +50,9 @@
                                 console.log('First Name Field ID:', firstNameFieldId);
                                 console.log('Last Name Field ID:', lastNameFieldId);
                                 
-                                // Update the existing deal with the custom fields
-                                let apiInstance = axios.create({
-                                    baseURL: baseUrl,
-                                    headers: { 'Authorization': `Bearer ${apiKey}` }
-                                });
-                                
-                                let opts = {
+                               const updatedDeal = await axios.put(`${baseUrl}/deals/${dealId}?api_token=${apiKey}`, {
                                     [firstNameFieldId]: firstName,
                                     [lastNameFieldId]: lastName
-                                };
-                                console.log(opts);
-                                
-                                const updatedDeal = await axios.put(`${baseUrl}/deals/${dealId}`, opts, {
-                                    headers: { 'Authorization': `Bearer ${apiKey}` }
                                 });
                                 console.log(updatedDeal);
                                 
