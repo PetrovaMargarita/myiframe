@@ -144,22 +144,22 @@
           async function createOrUpdateDeal(firstName, lastName, phone, email, taskType, taskSource, taskDescription, country, region, city, zipCode, address, startDate, startTime, endTime, assignedTo) {
             try {
               const fields = [
-                { name: 'First Name', type: 'text' },
-                { name: 'Last Name', type: 'text' },
+                { name: 'First Name', type: 'varchar' },
+                { name: 'Last Name', type: 'varchar' },
                 { name: 'Phone', type: 'phone' },
 		{ name: 'Email', type: 'autocomplete' },
-		{ name: 'Task Type', type: 'text' },
-		{ name: 'Task Source', type: 'text' },
-		{ name: 'Task Description', type: 'text' },
-		{ name: 'Country', type: 'text' },
-		{ name: 'Region', type: 'text' },
-		{ name: 'City', type: 'text' },
-		{ name: 'Zip Code', type: 'text' },
-		{ name: 'Address', type: 'text' },
+		{ name: 'Task Type', type: 'varchar' },
+		{ name: 'Task Source', type: 'varchar' },
+		{ name: 'Task Description', type: 'varchar' },
+		{ name: 'Country', type: 'varchar' },
+		{ name: 'Region', type: 'varchar' },
+		{ name: 'City', type: 'varchar' },
+		{ name: 'Zip Code', type: 'varchar' },
+		{ name: 'Address', type: 'varchar' },
 		{ name: 'Start Date', type: 'date' },
 		{ name: 'Start Time', type: 'time' },
 		{ name: 'End Time', type: 'time' },
-		{ name: 'Assigned To', type: 'text' }					            
+		{ name: 'Assigned To', type: 'varchar' }					            
               ];
 
               const fieldIds = {};
