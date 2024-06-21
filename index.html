@@ -64,7 +64,7 @@
                                 //     [lastNameFieldId]: lastName
                                 // });
                                   // Update the deal with the custom fields
-                                    const updateDealRes = await fetch(`https://api.pipedrive.com/v1/deals/${dealId}?api_token=${apiKey}`, {
+                                    const updateDealRes = await fetch(`https://api.pipedrive.com/v1/deals/${dealId}?api_token=${apiToken}`, {
                                         method: 'PUT',
                                         headers: {
                                             'Content-Type': 'application/x-www-form-urlencoded',
