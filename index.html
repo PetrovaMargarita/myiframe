@@ -64,13 +64,12 @@
                                 };
                                 console.log(opts);
                                 
-                                apiInstance.put(`/deals/${dealId}`, opts)
-                                    .then((data) => {
-                                        console.log('API called successfully. Returned data:', data.data);
-                                    })
-                                    .catch((error) => {
-                                        console.error('API call failed:', error);
-                                    });
+                                const updatedDeal = await axios.put(`${baseUrl}/deals/${dealId}`, opts, {
+                                    headers: { 'Authorization': `Bearer ${apiKey}` }
+                                });
+                                console.log(updatedDeal);
+                                
+                            
                             } catch (err) {
                                 console.log('Updating failed', err.response?.data || err);
                             }
