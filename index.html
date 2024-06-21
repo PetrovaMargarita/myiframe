@@ -57,6 +57,7 @@
                                 [fieldIds['First Name']]: firstName,
                                 [fieldIds['Last Name']]: lastName
                             };
+                            console.log('ud', updateData);
 
                             const updateRes = await axios.put(`${baseUrl}/deals/${dealId}`, updateData, {
                                 headers: { 'Content-Type': 'application/json' },
