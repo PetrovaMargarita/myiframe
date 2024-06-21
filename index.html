@@ -63,23 +63,24 @@
                                 //     [firstNameFieldId]: firstName,
                                 //     [lastNameFieldId]: lastName
                                 // });
+                                  // Update the deal with the custom fields
+                                    const updateDealRes = await fetch(`https://api.pipedrive.com/v1/deals/${dealId}?api_token=${apiKey}`, {
+                                        method: 'PUT',
+                                        headers: {
+                                            'Content-Type': 'application/x-www-form-urlencoded',
+                                        },
+                                        body: new URLSearchParams({
+                                            title: 'Updated Deal with Custom Fields',
+                                            [firstNameFieldKey]: firstName,
+                                            [lastNameFieldKey]: lastName
+                                        })
+                                    });
+                                    const updateDealData = await updateDealRes.json();
+                                console.log(updateDealRes);
 
                                 
-                                const customFieldsData = {
-                                    // Замените на данные из формы ввода
-                                    // Пример:
-                                    field1: 'значение1',
-                                    field2: 'значение2',
-                                    // Добавьте другие поля, которые нужно обновить
-                                };
-                                const apiUrl = `https://api.pipedrive.com/v1/deals/${dealId}?api_token=${apiToken}`;
-                                const response = await axios.put(apiUrl, {
-                                    custom_fields: customFieldsData
-                                });
 
-                                
-
-                                console.log('Сделка успешно обновлена с новыми значениями пользовательских полей!', response.data);
+                                console.log('Сделка успешно обновлена с новыми значениями пользовательских полей!', updateDealRes.data);
                             } catch (err) {
                                 console.log('Обновление сделки не удалось', err.response?.data || err);
                             }
