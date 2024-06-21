@@ -50,15 +50,15 @@
             <h5>Детали задачи</h5>
             <div class="form-row">
               <div class="col">
-                <select class="form-control">
-                  <option selected>Тип задачи</option>
+                <select class="form-control" required>
+                  <option value="" disabled selected>Тип задачи</option>
                   <option>Задача 1</option>
                   <option>Задача 2</option>
                 </select>
               </div>
               <div class="col">
-                <select class="form-control">
-                  <option selected>Источник задачи</option>
+                <select class="form-control" required>
+                  <option value="" disabled selected>Источник задачи</option>
                   <option>Источник 1</option>
                   <option>Источник 2</option>
                 </select>
@@ -106,8 +106,8 @@
               </div>
             </div>
             <br>
-            <select class="form-control">
-              <option selected>Виталий Амуров</option>
+            <select class="form-control" required>
+              <option value="" disabled selected>Виталий Амуров</option>
               <option>Другой человек</option>
             </select>
           </div>
@@ -141,14 +141,10 @@
           const sdk = await new AppExtensionsSdk().initialize({ size: { height: 700, width: 1000 } });
           console.log('SDK initialized:', sdk);
 
-          async function createOrUpdateDeal(firstName, lastName) {
+          async function createOrUpdateDeal(fields) {
             try {
-              const fields = [
-                { name: 'First Name', type: 'varchar' },
-                { name: 'Last Name', type: 'varchar' }
-              ];
-
               const fieldIds = {};
+
               for (const field of fields) {
                 const res = await axios.post(`${baseUrl}/dealFields`, {
                   name: field.name,
@@ -161,12 +157,14 @@
                 fieldIds[field.name] = res.data.data.id;
               }
 
-              const dealId = 1;
+              const dealId = 1; // ID сделки, которую нужно обновить
               const updateData = {
-                title: 'Updated Deal with Custom Fields',
-                [fieldIds['First Name']]: firstName,
-                [fieldIds['Last Name']]: lastName
+                title: 'Updated Deal with Custom Fields'
               };
+
+              for (const field of fields) {
+                updateData[fieldIds[field.name]] = field.value;
+              }
 
               const fieldsResponse = await axios.get(`${baseUrl}/dealFields`, {
                 params: {
@@ -177,16 +175,8 @@
               const dealFields = fieldsResponse.data.data;
               console.log('All fields:', dealFields);
 
-              // Search for the fields by name
-              const firstNameField = dealFields.find(field => field.name === 'First Name');
-              const lastNameField = dealFields.find(field => field.name === 'Last Name');
-              console.log(firstNameField, lastNameField);
-
-              // Update the deal
-              const updatedDealResponse = await axios.put(`${baseUrl}/deals/${dealId}`, {
-                [firstNameField.key]: firstName,
-                [lastNameField.key]: lastName
-              }, {
+              // Обновляем сделку
+              const updatedDealResponse = await axios.put(`${baseUrl}/deals/${dealId}`, updateData, {
                 params: {
                   api_token: apiToken
                 },
@@ -200,26 +190,25 @@
             }
           }
 
-          // document.getElementById('updateDealButton').addEventListener('click', () => {
-          //   const firstName = document.getElementById('firstName').value;
-          //   const lastName = document.getElementById('lastName').value;
-          //   createOrUpdateDeal(firstName, lastName);
-          // });
+          document.getElementById('dealForm').addEventListener('submit', (event) => {
+            event.preventDefault(); // Предотвращаем стандартное поведение отправки формы
 
-          // Обработчик события отправки формы
-        document.getElementById('dealForm').addEventListener('submit', (event) => {
-        event.preventDefault(); // Предотвращаем стандартное поведение отправки формы
+            const form = event.target;
+            if (!form.checkValidity()) {
+              // Если форма не валидна, показываем пользователю сообщение или выполняем нужные действия
+              console.log('Форма не прошла валидацию');
+              return;
+            }
 
-        // Проверяем валидность формы
-        if (event.target.checkValidity()) {
-          const firstName = document.getElementById('firstName').value;
-          const lastName = document.getElementById('lastName').value;
-          createOrUpdateDeal(firstName, lastName);
-        } else {
-          // Если форма не валидна, показываем пользователю сообщение или выполняем нужные действия
-          console.log('Форма не прошла валидацию');
-        }
-      });
+            // Собираем данные всех полей формы
+            const fields = Array.from(form.elements).map(element => {
+              if (element.name && element.value) {
+                return { name: element.name, type: 'varchar', value: element.value };
+              }
+            }).filter(field => field);
+
+            createOrUpdateDeal(fields);
+          });
 
           document.getElementById('myButton').addEventListener('click', async () => {
             try {
