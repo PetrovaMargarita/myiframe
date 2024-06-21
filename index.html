@@ -65,7 +65,7 @@
               </div>
             </div>
             <br>
-            <textarea class="form-control" rows="4" id="taskDescription" placeholder="Описание задачи" required></textarea>
+            <textaddress class="form-control" rows="4" id="taskDescription" placeholder="Описание задачи" required></textarea>
           </div>
         </div>
       </div>
@@ -141,7 +141,7 @@
           const sdk = await new AppExtensionsSdk().initialize({ size: { height: 700, width: 1000 } });
           console.log('SDK initialized:', sdk);
 
-          async function createOrUpdateDeal(firstName, lastName, phone, email, taskType, taskSource, taskDescription, country, region, city, zipCode, area, startDate, startTime, endTime, assignedTo) {
+          async function createOrUpdateDeal(firstName, lastName, phone, email, taskType, taskSource, taskDescription, country, region, city, zipCode, address, startDate, startTime, endTime, assignedTo) {
             try {
               const fields = [
                 { name: 'First Name', type: 'text' },
@@ -189,7 +189,7 @@
 		[fieldIds['Region']]: region,
 		[fieldIds['City']]: city,
 		[fieldIds['Zip Code']]: zipCode,
-		[fieldIds['Area']]: area,
+		[fieldIds['address']]: address,
 		[fieldIds['Start Date']]: startDate,
 		[fieldIds['Start Time']]: startTime,
 		[fieldIds['End Time']]: endTime,
@@ -217,7 +217,7 @@
 		const regionField = dealFields.find(field => field.name === 'Region');
 		const cityField = dealFields.find(field => field.name === 'City');
 		const zipCodeField = dealFields.find(field => field.name === 'Zip Code');
-		const areaField = dealFields.find(field => field.name === 'Area');
+		const addressField = dealFields.find(field => field.name === 'address');
 		const startDateField = dealFields.find(field => field.name === 'Start Date');
 		const startTimeField = dealFields.find(field => field.name === 'Start Time');
 		const endTimeField = dealFields.find(field => field.name === 'End Time');
@@ -237,7 +237,7 @@
 		[regionField.key]: region,
 		[cityField.key]: city,
 		[zipCodeField.key]: zipCode,
-		[areaField.key]: area,
+		[addressField.key]: address,
 		[startDateField.key]: startDate,
 		[startTimeField.key]: startTime,
 		[endTimeField.key]: endTime,
@@ -280,12 +280,12 @@
 	const region = document.getElementById('region').value;
 	const city = document.getElementById('city').value;
 	const zipCode = document.getElementById('zipCode').value;
-	const area = document.getElementById('area').value;
+	const address = document.getElementById('address').value;
 	const startDate = document.getElementById('startDate').value;
 	const startTime = document.getElementById('startTime').value;
 	const endTime = document.getElementById('endTime').value;
 	const assignedTo = document.getElementById('assignedTo').value;
-	          createOrUpdateDeal(firstName, lastName, phone, email, taskType, taskSource, taskDescription, country, region, city, zipCode, area, startDate, startTime, endTime, assignedTo);
+	          createOrUpdateDeal(firstName, lastName, phone, email, taskType, taskSource, taskDescription, country, region, city, zipCode, address, startDate, startTime, endTime, assignedTo);
         } else {
           // Если форма не валидна, показываем пользователю сообщение или выполняем нужные действия
           console.log('Форма не прошла валидацию');
