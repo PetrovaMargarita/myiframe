@@ -28,44 +28,47 @@
                         const sdk = await new AppExtensionsSdk().initialize({ size: { height: 500, width: 500 } });
                         console.log('SDK initialized:', sdk);
 
-                        document.getElementById('dealForm').addEventListener('submit', async function(event) {
-                            event.preventDefault();
-                            
+                        const pipedrive = require('pipedrive');
+                        const defaultClient = new pipedrive.ApiClient();
+                        defaultClient.authentications.api_key.apiKey = 'YOUR_PIPEDRIVE_API_KEY';
+
+                       async function addNewCustomDealField(firstName, lastName) {
+                                try {
+                                    console.log('Sending request...');
+                    
+                                    const api = new pipedrive.DealFieldsApi(defaultClient);
+                    
+                                    // Add custom fields to Pipedrive
+                                    const responseFirstName = await api.addDealField({
+                                        name: 'First Name',
+                                        field_type: 'text'
+                                    });
+                    
+                                    const responseLastName = await api.addDealField({
+                                        name: 'Last Name',
+                                        field_type: 'text'
+                                    });
+                    
+                                    // Create a new deal with the custom fields
+                                    const dealsApi = new pipedrive.DealsApi(defaultClient);
+                                    const newDeal = await dealsApi.addDeal({
+                                        title: 'New Deal with Custom Fields',
+                                        [responseFirstName.data.key]: firstName,
+                                        [responseLastName.data.key]: lastName
+                                    });
+                    
+                                    console.log('Custom fields and deal were added successfully!', newDeal);
+                                } catch (err) {
+                                    const errorToLog = err.context?.body || err;
+                                    console.log('Adding failed', errorToLog);
+                                }
+                            }
+                        function createDeal() {
                             const firstName = document.getElementById('firstName').value;
                             const lastName = document.getElementById('lastName').value;
-                
-                            // Здесь нужно добавить логику для обновления существующей сделки в Pipedrive
-                
-                            // Примерный код для обновления сделки в Pipedrive с новыми пользовательскими полями
-                            const dealId = '1'; // Замените на реальный ID сделки
-                            const apiToken = '2fa5095f3ba3911496e097a4cfde2f150e097539'; // Замените на ваш API токен Pipedrive
-                
-                            const customFields = {
-                                'Имя': firstName,
-                                'Фамилия': lastName
-                            };
-                
-                            try {
-                                const response = await fetch(`https://api.pipedrive.com/v1/deals/${dealId}?api_token=${apiToken}`, {
-                                    method: 'PUT',
-                                    headers: {
-                                        'Content-Type': 'application/json'
-                                    },
-                                    body: JSON.stringify({
-                                        custom_fields: customFields
-                                    })
-                                });
-                
-                                if (!response.ok) {
-                                    throw new Error('Failed to update deal in Pipedrive');
-                                }
-                
-                                alert('Пользовательские поля успешно обновлены в Pipedrive!');
-                            } catch (error) {
-                                console.error('Ошибка при обновлении сделки в Pipedrive:', error);
-                                alert('Произошла ошибка. Пожалуйста, проверьте консоль для более подробной информации.');
-                            }
-                        });
+                            addNewCustomDealField(firstName, lastName);
+                        }
+                        
 
                         document.getElementById('myButton').addEventListener('click', async () => {
                             try {
