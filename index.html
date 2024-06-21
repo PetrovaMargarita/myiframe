@@ -52,15 +52,13 @@
                             }
 
                             const dealId = 1;
-                            const updateData = {
-                                title: 'Updated Deal with Custom Fields',
-                                [fieldIds['First Name']]: firstName,
-                                [fieldIds['Last Name']]: lastName
-                            };
-                            console.log('ud', updateData);
+                            const updateData = new FormData();
+                            updateData.append('title', 'Updated Deal with Custom Fields');
+                            updateData.append(fieldIds['First Name'], firstName);
+                            updateData.append(fieldIds['Last Name'], lastName);
 
                             const updateRes = await axios.put(`${baseUrl}/deals/${dealId}`, updateData, {
-                                headers: { 'Content-Type': 'application/json' },
+                                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                                 params: { api_token: apiToken }
                             });
 
