@@ -141,7 +141,7 @@
           const sdk = await new AppExtensionsSdk().initialize({ size: { height: 700, width: 1000 } });
           console.log('SDK initialized:', sdk);
 
-          async function createOrUpdateDeal(firstName, lastName) {
+          async function createOrUpdateDeal(firstName, lastName, phone, email) {
             try {
               const fields = [
                 { name: 'First Name', type: 'text' },
@@ -223,7 +223,7 @@
           const firstName = document.getElementById('firstName').value;
           const lastName = document.getElementById('lastName').value;
           const phone = document.getElementById('phone').value;
-				  const email = document.getElementById('email').value;
+	  const email = document.getElementById('email').value;
           createOrUpdateDeal(firstName, lastName, phone, email);
         } else {
           // Если форма не валидна, показываем пользователю сообщение или выполняем нужные действия
