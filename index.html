@@ -155,11 +155,11 @@
 		{ name: 'Region', type: 'text' },
 		{ name: 'City', type: 'text' },
 		{ name: 'Zip Code', type: 'text' },
-		{ name: 'Area', type: 'date' },
-		{ name: 'Start Date', type: 'text' },
+		{ name: 'Address', type: 'text' },
+		{ name: 'Start Date', type: 'date' },
 		{ name: 'Start Time', type: 'time' },
 		{ name: 'End Time', type: 'time' },
-		{ name: 'Assigned To', type: 'person' }					            
+		{ name: 'Assigned To', type: 'text' }					            
               ];
 
               const fieldIds = {};
@@ -284,7 +284,7 @@
 	const startDate = document.getElementById('startDate').value;
 	const startTime = document.getElementById('startTime').value;
 	const endTime = document.getElementById('endTime').value;
-	const assignedTo = document.getElementById('assignedTo').value;
+	const assignedTo = document.getElementById('select option:selected').value;
 	          createOrUpdateDeal(firstName, lastName, phone, email, taskType, taskSource, taskDescription, country, region, city, zipCode, address, startDate, startTime, endTime, assignedTo);
         } else {
           // Если форма не валидна, показываем пользователю сообщение или выполняем нужные действия
