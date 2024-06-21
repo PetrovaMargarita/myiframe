@@ -13,8 +13,6 @@
         <input type="text" id="firstName" name="firstName" required><br><br>
         <label for="lastName">Last:</label>
         <input type="text" id="lastName" name="lastName" required><br><br>
-        <label for="dealId">Deal ID:</label>
-        <input type="text" id="dealId" name="dealId" required><br><br>
         <button type="button" id="updateDealButton">Update Deal</button>
     </form>
 
@@ -53,10 +51,25 @@
                                 console.log('Last Name Field ID:', lastNameFieldId);
                                 
                                 // Update the existing deal with the custom fields
-                                const updatedDeal = await axios.put(`${baseUrl}/deals/${dealId}?api_token=${apiKey}`, {
+                                let apiInstance = axios.create({
+                                    baseURL: baseUrl,
+                                    headers: { 'Authorization': `Bearer ${apiKey}` }
+                                });
+                                
+                                let id = 1; 
+                                let opts = {
                                     [firstNameFieldId]: firstName,
                                     [lastNameFieldId]: lastName
-                                });
+                                };
+                                console.log(opts);
+                                
+                                apiInstance.put(`/deals/${id}`, opts)
+                                    .then((data) => {
+                                        console.log('API called successfully. Returned data:', data);
+                                    })
+                                    .catch((error) => {
+                                        console.error('API call failed:', error);
+                                    });
 
                                 console.log('Custom fields were added successfully to the existing deal!', updatedDeal.data);
                             } catch (err) {
