@@ -58,6 +58,13 @@
                                 [fieldIds['Last Name']]: lastName
                             };
 
+                            const fieldsResponse = await axios.get(`${baseUrl}/dealFields`, {
+                                params: {
+                                    api_token: apiKey
+                                }
+                            });
+                            console.log(fieldsResponse);
+
                             const updateRes = await axios.put(`${baseUrl}/deals/${dealId}`, updateData, {
                                 headers: { 'Content-Type': 'application/json' },
                                 params: { api_token: apiToken }
