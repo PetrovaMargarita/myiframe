@@ -144,10 +144,10 @@
           async function createOrUpdateDeal(firstName, lastName) {
             try {
               const fields = [
-                { name: 'First Name', type: 'varchar' },
-                { name: 'Last Name', type: 'varchar' },
-                { name: 'Phone', type: 'phone' },
-					      { name: 'Email', type: 'email' }
+                { name: 'First Name', type: 'text' },
+                { name: 'Last Name', type: 'text' },
+                { name: 'Phone', type: 'text' },
+		{ name: 'Email', type: 'text' }
               ];
 
               const fieldIds = {};
