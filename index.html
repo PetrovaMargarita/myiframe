@@ -34,7 +34,8 @@
                         async function addNewCustomDealField(firstName, lastName) {
                         try {
                             console.log('Sending request to add custom fields...');
-            
+                            
+                             console.log(firstName);
                             // Add custom fields to Pipedrive
                             const firstNameField = await axios.post(`${baseUrl}/dealFields?api_token=${apiKey}`, {
                                 name: 'First Name',
