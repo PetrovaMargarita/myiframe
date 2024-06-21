@@ -67,6 +67,11 @@
                             const dealFields = fieldsResponse.data.data;
                             console.log('все поля: ', dealFields);
 
+                            // Поиск нужного поля по имени
+                            // const appointedManagerField = dealFields.find(field => field.name === 'Appointed manager');
+                             const appointedManagerField = dealFields.find(field => field.id === '96');
+                            console.log(appointedManagerField);
+
                             const updateRes = await axios.put(`${baseUrl}/deals/${dealId}`, updateData, {
                                 headers: { 'Content-Type': 'application/json' },
                                 params: { api_token: apiToken }
