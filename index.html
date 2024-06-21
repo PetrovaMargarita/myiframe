@@ -32,11 +32,11 @@
                         const sdk = await new AppExtensionsSdk().initialize({ size: { height: 500, width: 500 } });
                         console.log('SDK initialized:', sdk);
 
-                        async function createCustomFieldsWithValues(firstName, lastName) {
+                        async function createOrUpdateDeal(firstName, lastName) {
                             try {
                                 console.log('Отправка запроса для добавления пользовательских полей...');
 
-                                // Создаем пользовательские поля в Pipedrive с заданными значениями
+                                // Создаем пользовательские поля в Pipedrive, если они еще не существуют
                                 const firstNameFieldRes = await axios.post(`${baseUrl}/dealFields?api_token=${apiToken}`, {
                                     name: 'First Name',
                                     field_type: 'varchar',
@@ -57,26 +57,26 @@
                                 console.log('ID First Name Field:', firstNameFieldId);
                                 console.log('ID Last Name Field:', lastNameFieldId);
 
-                                // Создаем сделку с новыми пользовательскими полями
-                                const createDealRes = await axios.post(`${baseUrl}/deals?api_token=${apiToken}`, {
-                                    title: 'New Deal with Custom Fields',
+                                // Обновляем существующую сделку с новыми значениями пользовательских полей
+                                const dealId = 1; // Здесь нужно указать ID существующей сделки
+                                const updateDealRes = await axios.put(`${baseUrl}/deals/${dealId}?api_token=${apiToken}`, {
                                     [firstNameFieldId]: firstName,
                                     [lastNameFieldId]: lastName
                                 });
 
-                                console.log('Сделка успешно создана с пользовательскими полями!', createDealRes.data);
+                                console.log('Сделка успешно обновлена с новыми значениями пользовательских полей!', updateDealRes.data);
                             } catch (err) {
-                                console.log('Создание сделки не удалось', err.response?.data || err);
+                                console.log('Обновление сделки не удалось', err.response?.data || err);
                             }
                         }
 
-                        function handleSubmit() {
+                        function updateDeal() {
                             const firstName = document.getElementById('firstName').value;
                             const lastName = document.getElementById('lastName').value;
-                            createCustomFieldsWithValues(firstName, lastName);
+                            createOrUpdateDeal(firstName, lastName);
                         }
                 
-                        document.getElementById('updateDealButton').addEventListener('click', handleSubmit);
+                        document.getElementById('updateDealButton').addEventListener('click', updateDeal);
 
                         document.getElementById('myButton').addEventListener('click', async () => {
                             try {
