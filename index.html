@@ -141,13 +141,25 @@
           const sdk = await new AppExtensionsSdk().initialize({ size: { height: 700, width: 1000 } });
           console.log('SDK initialized:', sdk);
 
-          async function createOrUpdateDeal(firstName, lastName, phone, email) {
+          async function createOrUpdateDeal(firstName, lastName, phone, email, taskType, taskSource, taskDescription, country, region, city, zipCode, area, startDate, startTime, endTime, assignedTo) {
             try {
               const fields = [
                 { name: 'First Name', type: 'text' },
                 { name: 'Last Name', type: 'text' },
-                { name: 'Phone', type: 'text' },
-		{ name: 'Email', type: 'text' }
+                { name: 'Phone', type: 'phone' },
+		{ name: 'Email', type: 'autocomplete' },
+		{ name: 'Task Type', type: 'text' },
+		{ name: 'Task Source', type: 'text' },
+		{ name: 'Task Description', type: 'text' },
+		{ name: 'Country', type: 'text' },
+		{ name: 'Region', type: 'text' },
+		{ name: 'City', type: 'text' },
+		{ name: 'Zip Code', type: 'text' },
+		{ name: 'Area', type: 'date' },
+		{ name: 'Start Date', type: 'text' },
+		{ name: 'Start Time', type: 'time' },
+		{ name: 'End Time', type: 'time' },
+		{ name: 'Assigned To', type: 'person' }					            
               ];
 
               const fieldIds = {};
@@ -169,7 +181,19 @@
                 [fieldIds['First Name']]: firstName,
                 [fieldIds['Last Name']]: lastName,
                 [fieldIds['Phone']]: phone,
-					      [fieldIds['Email']]: email
+		[fieldIds['Email']]: email,
+		[fieldIds['Task Type']]: taskType,
+		[fieldIds['Task Source']]: taskSource,
+		[fieldIds['Task Description']]: taskDescription,
+		[fieldIds['Country']]: country,
+		[fieldIds['Region']]: region,
+		[fieldIds['City']]: city,
+		[fieldIds['Zip Code']]: zipCode,
+		[fieldIds['Area']]: area,
+		[fieldIds['Start Date']]: startDate,
+		[fieldIds['Start Time']]: startTime,
+		[fieldIds['End Time']]: endTime,
+		[fieldIds['Assigned To']]: assignedTo
               };
 
               const fieldsResponse = await axios.get(`${baseUrl}/dealFields`, {
@@ -182,10 +206,23 @@
               console.log('All fields:', dealFields);
 
               // Search for the fields by name
-              const firstNameField = dealFields.find(field => field.name === 'First Name');
-              const lastNameField = dealFields.find(field => field.name === 'Last Name');
-              const phoneField = dealFields.find(field => field.name === 'Phone');
-              const emailField = dealFields.find(field => field.name === 'Email');
+                const firstNameField = dealFields.find(field => field.name === 'First Name');
+                const lastNameField = dealFields.find(field => field.name === 'Last Name');
+                const phoneField = dealFields.find(field => field.name === 'Phone');
+                const emailField = dealFields.find(field => field.name === 'Email');
+	        const phoneField = dealFields.find(field => field.name === 'Phone');
+		const taskTypeField = dealFields.find(field => field.name === 'Task Type');
+		const taskSourceField = dealFields.find(field => field.name === 'Task Source');
+		const taskDescriptionField = dealFields.find(field => field.name === 'Task Description');
+		const countryField = dealFields.find(field => field.name === 'Country');
+		const regionField = dealFields.find(field => field.name === 'Region');
+		const cityField = dealFields.find(field => field.name === 'City');
+		const zipCodeField = dealFields.find(field => field.name === 'Zip Code');
+		const areaField = dealFields.find(field => field.name === 'Area');
+		const startDateField = dealFields.find(field => field.name === 'Start Date');
+		const startTimeField = dealFields.find(field => field.name === 'Start Time');
+		const endTimeField = dealFields.find(field => field.name === 'End Time');
+		const assignedToField = dealFields.find(field => field.name === 'Assigned To');
               console.log(phoneField, emailField);
 
               // Update the deal
@@ -193,7 +230,20 @@
                 [firstNameField.key]: firstName,
                 [lastNameField.key]: lastName,
                 [phoneField.key]: phone,
-                [emailField.key]: email
+                [emailField.key]: email,
+		[taskTypeField.key]: taskType,
+		[taskSourceField.key]: taskSource,
+		[taskDescriptionField.key]: taskDescription,
+		[countryField.key]: country,
+		[regionField.key]: region,
+		[cityField.key]: city,
+		[zipCodeField.key]: zipCode,
+		[areaField.key]: area,
+		[startDateField.key]: startDate,
+		[startTimeField.key]: startTime,
+		[endTimeField.key]: endTime,
+		[assignedToField.key]: assignedTo
+
               }, {
                 params: {
                   api_token: apiToken
@@ -220,11 +270,23 @@
 
         // Проверяем валидность формы
         if (event.target.checkValidity()) {
-          const firstName = document.getElementById('firstName').value;
-          const lastName = document.getElementById('lastName').value;
-          const phone = document.getElementById('phone').value;
-	  const email = document.getElementById('email').value;
-          createOrUpdateDeal(firstName, lastName, phone, email);
+        const firstName = document.getElementById('firstName').value;
+        const lastName = document.getElementById('lastName').value;
+ 	const phone = document.getElementById('phone').value;
+	const email = document.getElementById('email').value;
+	const taskType = document.getElementById('taskType').value;
+	const taskSource = document.getElementById('taskSource').value;
+	const taskDescription = document.getElementById('taskDescription').value;
+	const country = document.getElementById('country').value;
+	const region = document.getElementById('region').value;
+	const city = document.getElementById('city').value;
+	const zipCode = document.getElementById('zipCode').value;
+	const area = document.getElementById('area').value;
+	const startDate = document.getElementById('startDate').value;
+	const startTime = document.getElementById('startTime').value;
+	const endTime = document.getElementById('endTime').value;
+	const assignedTo = document.getElementById('assignedTo').value;
+	          createOrUpdateDeal(firstName, lastName, phone, email, taskType, taskSource, taskDescription, country, region, city, zipCode, area, startDate, startTime, endTime, assignedTo);
         } else {
           // Если форма не валидна, показываем пользователю сообщение или выполняем нужные действия
           console.log('Форма не прошла валидацию');
