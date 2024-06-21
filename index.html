@@ -18,95 +18,76 @@
 
     <button id="myButton">Close</button>
 
-    <footer>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@pipedrive/app-extensions-sdk@0.2.0-rc.0/dist/index.umd.js"></script>
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                const companyDomain = 'testrita-sandbox';
-                const apiToken = '2fa5095f3ba3911496e097a4cfde2f150e097539';
-                const baseUrl = `https://${companyDomain}.pipedrive.com/api/v1`;
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@pipedrive/app-extensions-sdk@0.2.0-rc.0/dist/index.umd.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const companyDomain = 'testrita-sandbox';
+            const apiToken = '2fa5095f3ba3911496e097a4cfde2f150e097539';
+            const baseUrl = `https://${companyDomain}.pipedrive.com/api/v1`;
 
-                setTimeout(async function() {
-                    try {
-                        const sdk = await new AppExtensionsSdk().initialize({ size: { height: 500, width: 500 } });
-                        console.log('SDK initialized:', sdk);
+            setTimeout(async () => {
+                try {
+                    const sdk = await new AppExtensionsSdk().initialize({ size: { height: 500, width: 500 } });
+                    console.log('SDK initialized:', sdk);
 
-                        async function createOrUpdateDeal(firstName, lastName) {
-                            try {
-                                console.log('Отправка запроса для добавления пользовательских полей...');
+                    async function createOrUpdateDeal(firstName, lastName) {
+                        try {
+                            const fields = [
+                                { name: 'First Name', type: 'varchar' },
+                                { name: 'Last Name', type: 'varchar' }
+                            ];
 
-                                // Создаем пользовательские поля в Pipedrive, если они еще не существуют
-                                const firstNameFieldRes = await axios.post(`${baseUrl}/dealFields?api_token=${apiToken}`, {
-                                    name: 'First Name',
-                                    field_type: 'varchar',
+                            const fieldIds = {};
+                            for (const field of fields) {
+                                const res = await axios.post(`${baseUrl}/dealFields`, {
+                                    name: field.name,
+                                    field_type: field.type,
                                     add_visible_flag: true,
                                     edit_flag: true
+                                }, {
+                                    params: { api_token: apiToken }
                                 });
-
-                                const lastNameFieldRes = await axios.post(`${baseUrl}/dealFields?api_token=${apiToken}`, {
-                                    name: 'Last Name',
-                                    field_type: 'varchar',
-                                    add_visible_flag: true,
-                                    edit_flag: true
-                                });
-
-                                const firstNameFieldId = firstNameFieldRes.data.data.id;
-                                const lastNameFieldId = lastNameFieldRes.data.data.id;
-
-                                console.log('ID First Name Field:', firstNameFieldId);
-                                console.log('ID Last Name Field:', lastNameFieldId);
-            
-                                // Обновляем существующую сделку с новыми значениями пользовательских полей
-                                const dealId = 1; // Здесь нужно указать ID существующей сделки
-                                // const updateDealRes = await axios.put(`https://api.pipedrive.com/v1/deals/${dealId}?api_token=${apiToken}`, {
-                                //     [firstNameFieldId]: firstName,
-                                //     [lastNameFieldId]: lastName
-                                // });
-                                  // Update the deal with the custom fields
-                                    const updateDealRes = await fetch(`https://api.pipedrive.com/v1/deals/${dealId}?api_token=${apiToken}`, {
-                                        method: 'PUT',
-                                        headers: {
-                                            'Content-Type': 'application/x-www-form-urlencoded',
-                                        },
-                                        body: new URLSearchParams({
-                                            [firstNameFieldId]: firstName,
-                                            [lastNameFieldId]: lastName
-                                        })
-                                    });
-                                    const updateDealData = await updateDealRes.json();
-                                console.log(updateDealRes);
-
-                                
-
-                                console.log('Сделка успешно обновлена с новыми значениями пользовательских полей!', updateDealRes.data);
-                            } catch (err) {
-                                console.log('Обновление сделки не удалось', err.response?.data || err);
+                                fieldIds[field.name] = res.data.data.id;
                             }
-                        }
 
-                        function updateDeal() {
-                            const firstName = document.getElementById('firstName').value;
-                            const lastName = document.getElementById('lastName').value;
-                            createOrUpdateDeal(firstName, lastName);
-                        }
-                
-                        document.getElementById('updateDealButton').addEventListener('click', updateDeal);
+                            const dealId = 1;
+                            const updateData = {
+                                title: 'Updated Deal with Custom Fields',
+                                [fieldIds['First Name']]: firstName,
+                                [fieldIds['Last Name']]: lastName
+                            };
 
-                        document.getElementById('myButton').addEventListener('click', async () => {
-                            try {
-                                await sdk.execute(AppExtensionsSdk.Command.CLOSE_MODAL);
-                                console.log("Модальное окно успешно закрыто");
-                            } catch (error) {
-                                console.error("Ошибка при закрытии модального окна:", error);
-                            }
-                        });
-                    } catch (error) {
-                        console.error('Не удалось инициализировать SDK:', error);
+                            const updateRes = await axios.put(`${baseUrl}/deals/${dealId}`, updateData, {
+                                headers: { 'Content-Type': 'application/json' },
+                                params: { api_token: apiToken }
+                            });
+
+                            console.log('Deal updated:', updateRes.data);
+                        } catch (err) {
+                            console.error('Deal update failed:', err);
+                        }
                     }
-                }, 5000);
-            });
-        </script>
-    </footer>
+
+                    document.getElementById('updateDealButton').addEventListener('click', () => {
+                        const firstName = document.getElementById('firstName').value;
+                        const lastName = document.getElementById('lastName').value;
+                        createOrUpdateDeal(firstName, lastName);
+                    });
+
+                    document.getElementById('myButton').addEventListener('click', async () => {
+                        try {
+                            await sdk.execute(AppExtensionsSdk.Command.CLOSE_MODAL);
+                            console.log("Modal closed successfully");
+                        } catch (error) {
+                            console.error("Failed to close modal:", error);
+                        }
+                    });
+                } catch (error) {
+                    console.error('SDK initialization failed:', error);
+                }
+            }, 5000);
+        });
+    </script>
 </body>
 </html>
