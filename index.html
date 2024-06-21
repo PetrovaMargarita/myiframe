@@ -13,7 +13,7 @@
         <input type="text" id="firstName" name="firstName" required><br><br>
         <label for="lastName">Last:</label>
         <input type="text" id="lastName" name="lastName" required><br><br>
-        <button type="button" onclick="createDeal()">Create</button>
+        <button type="button" id="createDealButton">Create</button>
     </form>
 
     <button id="myButton">Close</button>
@@ -25,13 +25,7 @@
             
             document.addEventListener('DOMContentLoaded', function() {
                 const apiKey = '2fa5095f3ba3911496e097a4cfde2f150e097539';
-                const baseUrl = 'https://api.pipedrive.com/v1';
-
-                function createDeal() {
-                        const firstName = document.getElementById('firstName').value;
-                        const lastName = document.getElementById('lastName').value;
-                        addNewCustomDealField(firstName, lastName);
-                    }
+                const baseUrl = 'https://testrita-sandbox.pipedrive.com/api/v1/';
                 setTimeout(async function() {
                     try {
                         const sdk = await new AppExtensionsSdk().initialize({ size: { height: 500, width: 500 } });
@@ -64,6 +58,14 @@
                             console.log('Adding failed', err.response?.data || err);
                         }
                     }
+
+                        function createDeal() {
+                            const firstName = document.getElementById('firstName').value;
+                            const lastName = document.getElementById('lastName').value;
+                            addNewCustomDealField(firstName, lastName);
+                        }
+                
+                        document.getElementById('createDealButton').addEventListener('click', createDeal);
             
                     
                       
