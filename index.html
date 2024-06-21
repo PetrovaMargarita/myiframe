@@ -56,13 +56,29 @@
 
                                 console.log('ID First Name Field:', firstNameFieldId);
                                 console.log('ID Last Name Field:', lastNameFieldId);
-
+            
                                 // Обновляем существующую сделку с новыми значениями пользовательских полей
                                 const dealId = 1; // Здесь нужно указать ID существующей сделки
-                                const updateDealRes = await axios.put(`https://api.pipedrive.com/v1/deals/${dealId}?api_token=${apiToken}`, {
-                                    [firstNameFieldId]: firstName,
-                                    [lastNameFieldId]: lastName
+                                // const updateDealRes = await axios.put(`https://api.pipedrive.com/v1/deals/${dealId}?api_token=${apiToken}`, {
+                                //     [firstNameFieldId]: firstName,
+                                //     [lastNameFieldId]: lastName
+                                // });
+
+                                
+                                const dealId = '1'; // Замените на ID вашей сделки в Pipedrive
+                                const customFieldsData = {
+                                    // Замените на данные из формы ввода
+                                    // Пример:
+                                    field1: 'значение1',
+                                    field2: 'значение2',
+                                    // Добавьте другие поля, которые нужно обновить
+                                };
+                                const apiUrl = `https://api.pipedrive.com/v1/deals/${dealId}?api_token=${apiToken}`;
+                                const response = await axios.put(apiUrl, {
+                                    custom_fields: customFieldsData
                                 });
+
+                                
 
                                 console.log('Сделка успешно обновлена с новыми значениями пользовательских полей!', updateDealRes.data);
                             } catch (err) {
