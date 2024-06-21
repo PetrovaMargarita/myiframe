@@ -13,6 +13,8 @@
         <input type="text" id="firstName" name="firstName" required><br><br>
         <label for="lastName">Last:</label>
         <input type="text" id="lastName" name="lastName" required><br><br>
+        <label for="dealId">Deal ID:</label>
+        <input type="text" id="dealId" name="dealId" required><br><br>
         <button type="button" id="updateDealButton">Update Deal</button>
     </form>
 
@@ -56,22 +58,19 @@
                                     headers: { 'Authorization': `Bearer ${apiKey}` }
                                 });
                                 
-                                let id = 1; 
                                 let opts = {
                                     [firstNameFieldId]: firstName,
                                     [lastNameFieldId]: lastName
                                 };
                                 console.log(opts);
                                 
-                                apiInstance.put(`/deals/${id}`, opts)
+                                apiInstance.put(`/deals/${dealId}`, opts)
                                     .then((data) => {
-                                        console.log('API called successfully. Returned data:', data);
+                                        console.log('API called successfully. Returned data:', data.data);
                                     })
                                     .catch((error) => {
                                         console.error('API call failed:', error);
                                     });
-
-                                console.log('Custom fields were added successfully to the existing deal!', updatedDeal.data);
                             } catch (err) {
                                 console.log('Updating failed', err.response?.data || err);
                             }
