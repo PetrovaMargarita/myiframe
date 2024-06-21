@@ -33,30 +33,7 @@
 
                     async function createOrUpdateDeal(firstName, lastName) {
                         try {
-                            const fields = [
-                                { name: 'First Name', type: 'varchar' },
-                                { name: 'Last Name', type: 'varchar' }
-                            ];
-
-                            const fieldIds = {};
-                            for (const field of fields) {
-                                const res = await axios.post(`${baseUrl}/dealFields`, {
-                                    name: field.name,
-                                    field_type: field.type,
-                                    add_visible_flag: true,
-                                    edit_flag: true
-                                }, {
-                                    params: { api_token: apiToken }
-                                });
-                                fieldIds[field.name] = res.data.data.id;
-                            }
-
                             const dealId = 1;
-                            const updateData = {
-                                title: 'Updated Deal with Custom Fields',
-                                [fieldIds['First Name']]: firstName,
-                                [fieldIds['Last Name']]: lastName
-                            };
 
                             const fieldsResponse = await axios.get(`${baseUrl}/dealFields`, {
                                 params: {
@@ -65,16 +42,19 @@
                             });
 
                             const dealFields = fieldsResponse.data.data;
-                            console.log('все поля: ', dealFields);
+                            console.log('All fields: ', dealFields);
 
-                            // Поиск нужного поля по имени
-                            const appointedManagerField = dealFields.find(field => field.name === 'First Name');
-                            console.log(appointedManagerField);
+                            const firstNameField = dealFields.find(field => field.name === 'First Name');
+                            const lastNameField = dealFields.find(field => field.name === 'Last Name');
+                            console.log(firstNameField, lastNameField);
 
-                            // Обновление сделки
-                            const updatedDealResponse = await axios.put(`${baseUrl}/deals/${dealId}`, {
-                                [appointedManagerField.key]: firstName
-                            }, {
+                            const updateData = {
+                                title: 'Updated Deal with Custom Fields',
+                                [firstNameField.key]: firstName,
+                                [lastNameField.key]: lastName
+                            };
+
+                            const updatedDealResponse = await axios.put(`${baseUrl}/deals/${dealId}`, updateData, {
                                 params: {
                                     api_token: apiToken
                                 },
@@ -82,7 +62,6 @@
                                     'Content-Type': 'application/json'
                                 }
                             });
-                            console.log('NEW', updatedDealResponse);
 
                             console.log('Deal updated:', updatedDealResponse.data);
                         } catch (err) {
