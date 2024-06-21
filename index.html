@@ -134,8 +134,8 @@
     document.addEventListener('DOMContentLoaded', () => {
   const companyDomain = 'testrita-sandbox';
   const apiToken = '2fa5095f3ba3911496e097a4cfde2f150e097539';
-  const baseUrl = 'https://${companyDomain}.pipedrive.com/api/v1';
-
+  const baseUrl = `https://${companyDomain}.pipedrive.com/api/v1`;
+                  
   setTimeout(async () => {
     try {
       const sdk = await new AppExtensionsSdk().initialize({ size: { height: 700, width: 1000 } });
@@ -166,7 +166,7 @@
           // Create or update each field in Pipedrive
           const fieldIds = {};
           for (const field of fields) {
-            const res = await axios.post('${baseUrl}/dealFields', {
+            const res = await axios.post(`${baseUrl}/dealFields`, {
               name: field.name,
               field_type: field.type,
               add_visible_flag: true,
@@ -199,13 +199,13 @@
           };
 
           // Fetch all deal fields from Pipedrive
-          const fieldsResponse = await axios.get('${baseUrl}/dealFields', {
+          const fieldsResponse = await axios.get(`${baseUrl}/dealFields`, {
             params: { api_token: apiToken }
           });
           const dealFields = fieldsResponse.data.data;
 
           // Update the deal in Pipedrive
-          const updateResponse = await axios.put('${baseUrl}/deals/${dealId}', updateData, {
+          const updateResponse = await axios.put(`${baseUrl}/deals/${dealId}`, updateData, {
             params: { api_token: apiToken },
             headers: { 'Content-Type': 'application/json' }
           });
