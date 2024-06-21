@@ -73,7 +73,7 @@
                             console.log(appointedManagerField);
 
                             // Обновление сделки
-                            const updatedDealResponse = await axios.put(`${baseUrl}/deals/${DEAL_ID}`, {
+                            const updatedDealResponse = await axios.put(`${baseUrl}/deals/${dealId}`, {
                                 [appointedManagerField.key]: 'Joker'
                             }, {
                                 params: {
