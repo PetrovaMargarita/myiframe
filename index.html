@@ -41,7 +41,7 @@
             <br>
             <input type="text" class="form-control" placeholder="Телефон" required>
             <br>
-            <input type="email" class="form-control" placeholder="Почта" required>
+            <input type="email" class="form-control" placeholder="Почта" >
           </div>
         </div>
         <!-- Второй блок: Детали задачи -->
@@ -65,7 +65,7 @@
               </div>
             </div>
             <br>
-            <textarea class="form-control" rows="4" placeholder="Описание задачи" required></textarea>
+            <textarea class="form-control" rows="4" placeholder="Описание задачи" ></textarea>
           </div>
         </div>
       </div>
@@ -75,34 +75,34 @@
         <div class="col-md-6">
           <div class="custom-block border">
             <h5>Место расположения</h5>
-            <input type="text" class="form-control" placeholder="Страна" required>
+            <input type="text" class="form-control" placeholder="Страна" >
             <br>
-            <input type="text" class="form-control" placeholder="Область" required>
+            <input type="text" class="form-control" placeholder="Область" >
             <br>
             <div class="form-row">
               <div class="col">
-                <input type="text" class="form-control" placeholder="Город" required>
+                <input type="text" class="form-control" placeholder="Город" >
               </div>
               <div class="col">
-                <input type="text" class="form-control" placeholder="Зип код" required> 
+                <input type="text" class="form-control" placeholder="Зип код" > 
               </div>
             </div>
             <br>
-            <input type="text" class="form-control" placeholder="Арреа" required>
+            <input type="text" class="form-control" placeholder="Арреа" >
           </div>
         </div>
         <!-- Четвертый блок: Время -->
         <div class="col-md-6">
           <div class="custom-block border">
             <h5>Время</h5>
-            <input type="date" class="form-control" placeholder="Дата старта" required>
+            <input type="date" class="form-control" placeholder="Дата старта" >
             <br>
             <div class="form-row">
               <div class="col">
-                <input type="time" class="form-control" placeholder="Начало времени" required>
+                <input type="time" class="form-control" placeholder="Начало времени" >
               </div>
               <div class="col">
-                <input type="time" class="form-control" placeholder="Конец времени" required>
+                <input type="time" class="form-control" placeholder="Конец времени" >
               </div>
             </div>
             <br>
@@ -163,7 +163,7 @@
                 }
                 });
                 fieldIds[field.name] = res.data.data.id;
-                  console.log(res);
+                  console.log('post', res.data);
               };
              
 
@@ -182,7 +182,7 @@
                 headers: {
                   'Content-Type': 'application/json'
                 }
-              });
+              });  console.log('get', fieldsResponse.data);
 
               const dealFields = fieldsResponse.data.data;
               console.log('All fields:', dealFields);
@@ -205,6 +205,7 @@
                 }
               });
               console.log('Deal updated:', updatedDealResponse.data);
+              console.log('put:', updatedDealResponse.data);
             } catch (err) {
               console.error('Deal update failed:', err);
             }
