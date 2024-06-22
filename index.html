@@ -150,6 +150,7 @@
               ];
 
               const fieldIds = {};
+              const fieldName = {};
               for (const field of fields) {
                 const res = await axios.post(`${baseUrl}/dealFields`, {
                   name: field.name,
