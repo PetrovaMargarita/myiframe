@@ -52,8 +52,8 @@
               <div class="col">
                 <select class="form-control" id="taskType">
                   <option value="" disabled selected>Тип задачи</option>
-                  <option value="Создать">Создать</option>
-                  <option value="Удалить">Удалить</option>
+                  <option value="Создать">Задача 1</option>
+                  <option value="Удалить">Задача 2</option>
                 </select>
               </div>
               <div class="col">
@@ -141,25 +141,25 @@
           const sdk = await new AppExtensionsSdk().initialize({ size: { height: 700, width: 1000 } });
           console.log('SDK initialized:', sdk);
 
-          async function createOrUpdateDeal(firstName, lastName, phone, email, taskType) {
+          async function createOrUpdateDeal(firstName, lastName, phone, email, taskType, taskSource, taskDescription, country, region, city, zipCode, address, startDate, startTime, endTime, assignedTo) {
             try {
               const fields = [
                 { name: 'First Name', type: 'varchar' },
                 { name: 'Last Name', type: 'varchar' },
                 { name: 'Phone', type: 'phone' },
                 { name: 'Email', type: 'varchar_auto' },
-                { name: 'Task Type', type: 'varchar' }
-                // { name: 'Task Source', type: 'varchar' },
-                // { name: 'Task Description', type: 'varchar' },
-                // { name: 'Country', type: 'varchar' },
-                // { name: 'Region', type: 'varchar' },
-                // { name: 'City', type: 'varchar' },
-                // { name: 'Zip Code', type: 'varchar' },
-                // { name: 'Address', type: 'varchar' },
-                // { name: 'Start Date', type: 'date' },
-                // { name: 'Start Time', type: 'time' },
-                // { name: 'End Time', type: 'time' },
-                // { name: 'Assigned To', type: 'varchar' }                                
+                { name: 'Task Type', type: 'varchar' },
+                { name: 'Task Source', type: 'varchar' },
+                { name: 'Task Description', type: 'varchar' },
+                { name: 'Country', type: 'varchar' },
+                { name: 'Region', type: 'varchar' },
+                { name: 'City', type: 'varchar' },
+                { name: 'Zip Code', type: 'varchar' },
+                { name: 'Address', type: 'varchar' },
+                { name: 'Start Date', type: 'date' },
+                { name: 'Start Time', type: 'time' },
+                { name: 'End Time', type: 'time' },
+                { name: 'Assigned To', type: 'varchar' }                                
               ];
             // console.log(taskType);
                 const dealId = 1;
@@ -183,18 +183,18 @@
                 [fieldIds['Last Name']]: lastName,
                 [fieldIds['Phone']]: phone,
                 [fieldIds['Email']]: email,
-                [fieldIds['Task Type']]: taskType
-                // [fieldIds['Task Source']]: taskSource,
-                // [fieldIds['Task Description']]: taskDescription,
-                // [fieldIds['Country']]: country,
-                // [fieldIds['Region']]: region,
-                // [fieldIds['City']]: city,
-                // [fieldIds['Zip Code']]: zipCode,
-                // [fieldIds['Address']]: address,
-                // [fieldIds['Start Date']]: startDate,
-                // [fieldIds['Start Time']]: startTime,
-                // [fieldIds['End Time']]: endTime,
-                // [fieldIds['Assigned To']]: assignedTo
+                [fieldIds['Task Type']]: taskType,
+                [fieldIds['Task Source']]: taskSource,
+                [fieldIds['Task Description']]: taskDescription,
+                [fieldIds['Country']]: country,
+                [fieldIds['Region']]: region,
+                [fieldIds['City']]: city,
+                [fieldIds['Zip Code']]: zipCode,
+                [fieldIds['Address']]: address,
+                [fieldIds['Start Date']]: startDate,
+                [fieldIds['Start Time']]: startTime,
+                [fieldIds['End Time']]: endTime,
+                [fieldIds['Assigned To']]: assignedTo
               };
 
               const fieldsResponse = await axios.get(`${baseUrl}/dealFields`, {
@@ -212,17 +212,17 @@
                 const phoneField = dealFields.find(field => field.name === 'Phone');
                 const emailField = dealFields.find(field => field.name === 'Email');
                 const taskTypeField = dealFields.find(field => field.name === 'Task Type');
-                // const taskSourceField = dealFields.find(field => field.name === 'Task Source');
-                // const taskDescriptionField = dealFields.find(field => field.name === 'Task Description');
-                // const countryField = dealFields.find(field => field.name === 'Country');
-                // const regionField = dealFields.find(field => field.name === 'Region');
-                // const cityField = dealFields.find(field => field.name === 'City');
-                // const zipCodeField = dealFields.find(field => field.name === 'Zip Code');
-                // const addressField = dealFields.find(field => field.name === 'address');
-                // const startDateField = dealFields.find(field => field.name === 'Start Date');
-                // const startTimeField = dealFields.find(field => field.name === 'Start Time');
-                // const endTimeField = dealFields.find(field => field.name === 'End Time');
-                // const assignedToField = dealFields.find(field => field.name === 'Assigned To');
+                const taskSourceField = dealFields.find(field => field.name === 'Task Source');
+                const taskDescriptionField = dealFields.find(field => field.name === 'Task Description');
+                const countryField = dealFields.find(field => field.name === 'Country');
+                const regionField = dealFields.find(field => field.name === 'Region');
+                const cityField = dealFields.find(field => field.name === 'City');
+                const zipCodeField = dealFields.find(field => field.name === 'Zip Code');
+                const addressField = dealFields.find(field => field.name === 'address');
+                const startDateField = dealFields.find(field => field.name === 'Start Date');
+                const startTimeField = dealFields.find(field => field.name === 'Start Time');
+                const endTimeField = dealFields.find(field => field.name === 'End Time');
+                const assignedToField = dealFields.find(field => field.name === 'Assigned To');
               // console.log(phoneField, emailField, assignedToField);
 
         const updatedDealResponse = await axios.put(`${baseUrl}/deals/${dealId}`, {
@@ -230,18 +230,18 @@
           [lastNameField.key]: lastName,
           [phoneField.key]: phone,
           [emailField.key]: email,
-          [taskTypeField.key]: taskType
-          // [taskSourceField.key]: taskSource,
-          // [taskDescriptionField.key]: taskDescription,
-          // [countryField.key]: country,
-          // [regionField.key]: region,
-          // [cityField.key]: city,
-          // [zipCodeField.key]: zipCode,
-          // [addressField.key]: address,
-          // [startDateField.key]: startDate,
-          // [startTimeField.key]: startTime,
-          // [endTimeField.key]: endTime,
-          // [assignedToField.key]: assignedTo
+          [taskTypeField.key]: taskType,
+          [taskSourceField.key]: taskSource,
+          [taskDescriptionField.key]: taskDescription,
+          [countryField.key]: country,
+          [regionField.key]: region,
+          [cityField.key]: city,
+          [zipCodeField.key]: zipCode,
+          [addressField.key]: address,
+          [startDateField.key]: startDate,
+          [startTimeField.key]: startTime,
+          [endTimeField.key]: endTime,
+          [assignedToField.key]: assignedTo
         }, {
           params: {
             api_token: apiToken
@@ -270,20 +270,20 @@
             const phone = document.getElementById('phone').value;
             const email = document.getElementById('email').value;
             const taskType = document.getElementById('taskType').value;
-            // const taskSource = document.getElementById('taskSource').value;
-            // const taskDescription = document.getElementById('taskDescription').value;
-            // const country = document.getElementById('country').value;
-            // const region = document.getElementById('region').value;
-            // const city = document.getElementById('city').value;
-            // const zipCode = document.getElementById('zipCode').value;
-            // const address = document.getElementById('address').value;
-            // const startDate = document.getElementById('startDate').value;
-            // const startTime = document.getElementById('startTime').value;
-            // const endTime = document.getElementById('endTime').value;
-            // const assignedTo = document.getElementById('assignedTo').value;
-          createOrUpdateDeal(firstName, lastName, phone, email, taskType);
+            const taskSource = document.getElementById('taskSource').value;
+            const taskDescription = document.getElementById('taskDescription').value;
+            const country = document.getElementById('country').value;
+            const region = document.getElementById('region').value;
+            const city = document.getElementById('city').value;
+            const zipCode = document.getElementById('zipCode').value;
+            const address = document.getElementById('address').value;
+            const startDate = document.getElementById('startDate').value;
+            const startTime = document.getElementById('startTime').value;
+            const endTime = document.getElementById('endTime').value;
+            const assignedTo = document.getElementById('assignedTo').value;
+         // createOrUpdateDeal(firstName, lastName, phone, email, taskType);
           
-          //   createOrUpdateDeal(firstName, lastName, phone, email, taskType, taskSource, taskDescription, country, region, city, zipCode, address, startDate, startTime, endTime, assignedTo);
+            createOrUpdateDeal(firstName, lastName, phone, email, taskType, taskSource, taskDescription, country, region, city, zipCode, address, startDate, startTime, endTime, assignedTo);
            } else {
             console.log('Форма не прошла валидацию');
           }
