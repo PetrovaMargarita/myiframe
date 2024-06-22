@@ -198,10 +198,10 @@
               // Update the deal
               const updatedDealResponse = await axios.put(`${baseUrl}/deals/${dealId}`, {
                 title: 'Test',
-                // [firstNameField.key]: firstName,
-                // [lastNameField.key]: lastName
-                [fieldIds['First Name'].key]: firstName,
-                [fieldIds['Last Name'].key]: lastName
+                [fieldName.key]: firstName,
+                [fieldName.key]: lastName
+                // [fieldIds['First Name'].key]: firstName,
+                // [fieldIds['Last Name'].key]: lastName
               }, {
                 params: {
                   api_token: apiToken
