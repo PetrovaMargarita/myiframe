@@ -141,7 +141,7 @@
           const sdk = await new AppExtensionsSdk().initialize({ size: { height: 700, width: 1000 } });
           console.log('SDK initialized:', sdk);
 
-          async function createOrUpdateDeal(firstName, lastName, phone, email) {
+          async function createOrUpdateDeal(firstName, lastName, phone, email, taskType) {
             try {
               const fields = [
                 { name: 'First Name', type: 'varchar' },
@@ -182,8 +182,8 @@
                 [fieldIds['First Name']]: firstName,
                 [fieldIds['Last Name']]: lastName,
                 [fieldIds['Phone']]: phone,
-                [fieldIds['Email']]: email
-                // [fieldIds['Task Type']]: taskType,
+                [fieldIds['Email']]: email,
+                [fieldIds['Task Type']]: taskType
                 // [fieldIds['Task Source']]: taskSource,
                 // [fieldIds['Task Description']]: taskDescription,
                 // [fieldIds['Country']]: country,
@@ -211,7 +211,7 @@
                 const lastNameField = dealFields.find(field => field.name === 'Last Name');
                 const phoneField = dealFields.find(field => field.name === 'Phone');
                 const emailField = dealFields.find(field => field.name === 'Email');
-                // const taskTypeField = dealFields.find(field => field.name === 'Task Type');
+                const taskTypeField = dealFields.find(field => field.name === 'Task Type');
                 // const taskSourceField = dealFields.find(field => field.name === 'Task Source');
                 // const taskDescriptionField = dealFields.find(field => field.name === 'Task Description');
                 // const countryField = dealFields.find(field => field.name === 'Country');
@@ -229,8 +229,8 @@
           [firstNameField.key]: firstName,
           [lastNameField.key]: lastName,
           [phoneField.key]: phone,
-          [emailField.key]: email
-          // [taskTypeField.key]: taskType,
+          [emailField.key]: email,
+          [taskTypeField.key]: taskType
           // [taskSourceField.key]: taskSource,
           // [taskDescriptionField.key]: taskDescription,
           // [countryField.key]: country,
@@ -269,7 +269,7 @@
             const lastName = document.getElementById('lastName').value;
             const phone = document.getElementById('phone').value;
             const email = document.getElementById('email').value;
-            // const taskType = document.getElementById('taskType').value;
+            const taskType = document.getElementById('taskType').value;
             // const taskSource = document.getElementById('taskSource').value;
             // const taskDescription = document.getElementById('taskDescription').value;
             // const country = document.getElementById('country').value;
@@ -281,7 +281,7 @@
             // const startTime = document.getElementById('startTime').value;
             // const endTime = document.getElementById('endTime').value;
             // const assignedTo = document.getElementById('assignedTo').value;
-          createOrUpdateDeal(firstName, lastName, phone, email);
+          createOrUpdateDeal(firstName, lastName, phone, email, taskType);
           
           //   createOrUpdateDeal(firstName, lastName, phone, email, taskType, taskSource, taskDescription, country, region, city, zipCode, address, startDate, startTime, endTime, assignedTo);
            } else {
