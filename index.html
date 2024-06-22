@@ -218,6 +218,7 @@
                 headers: { 'Content-Type': 'application/json' }
               });
               console.log('Deal updated:', updatedDealResponse.data);
+              window.location.href = 'success.html';
             } catch (err) {
               console.error('Deal update failed:', err);
             }
