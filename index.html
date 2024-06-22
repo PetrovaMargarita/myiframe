@@ -168,34 +168,36 @@
              
 
             
-              const updateData = {
-                title: 'Test',
-                [fieldIds['First Name']]: firstName,
-                [fieldIds['Last Name']]: lastName
-              };
-              console.log(updateData);
+              // const updateData = {
+              //   title: 'Test',
+              //   [fieldIds['First Name']]: firstName,
+              //   [fieldIds['Last Name']]: lastName
+              // };
+              // console.log(updateData);
 
-              const fieldsResponse = await axios.get(`${baseUrl}/dealFields`, updateData, {
-                params: {
-                  api_token: apiToken
-                },
-                headers: {
-                  'Content-Type': 'application/json'
-                }
-              });  console.log('get', fieldsResponse.data);
+              // const fieldsResponse = await axios.get(`${baseUrl}/dealFields`, {
+              //   params: {
+              //     api_token: apiToken
+              //   },
+              //   headers: {
+              //     'Content-Type': 'application/json'
+              //   }
+              // });  console.log('get', fieldsResponse.data);
 
-              const dealFields = fieldsResponse.data.data;
-              console.log('All fields:', dealFields);
+              // const dealFields = fieldsResponse.data.data;
+              // console.log('All fields:', dealFields);
 
               // Search for the fields by name
-              const firstNameField = dealFields.find(field => field.name === 'First Name');
-              const lastNameField = dealFields.find(field => field.name === 'Last Name');
-              console.log(firstNameField, lastNameField);
+              // const firstNameField = dealFields.find(field => field.name === 'First Name');
+              // const lastNameField = dealFields.find(field => field.name === 'Last Name');
+              // console.log(firstNameField, lastNameField);
 
               // Update the deal
               const updatedDealResponse = await axios.put(`${baseUrl}/deals/${dealId}`, {
-                [firstNameField.key]: firstName,
-                [lastNameField.key]: lastName
+                // [firstNameField.key]: firstName,
+                // [lastNameField.key]: lastName
+                [fieldIds['First Name']]: firstName,
+                [fieldIds['Last Name']]: lastName
               }, {
                 params: {
                   api_token: apiToken
