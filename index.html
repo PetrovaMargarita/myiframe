@@ -176,17 +176,24 @@
                 title: 'Test'
               };
               
-              // Предположим, что у вас есть поля `firstName` и `lastName` в объекте `fields`
-              for (const field of fields) {
+              // // Предположим, что у вас есть поля `firstName` и `lastName` в объекте `fields`
+              // for (const field of fields) {
+              //   if (field.name === 'First Name') {
+              //     updateData[fieldNames[field.name]] = firstName;
+              //   } else if (field.name === 'Last Name') {
+              //     updateData[fieldNames[field.name]] = lastName;
+              //   }
+              // }
+              
+              // Обновляем сделку
+              const updatedDealResponse = await axios.put(`${baseUrl}/deals/${dealId}`, {
+                for (const field of fields) {
                 if (field.name === 'First Name') {
                   updateData[fieldNames[field.name]] = firstName;
                 } else if (field.name === 'Last Name') {
                   updateData[fieldNames[field.name]] = lastName;
                 }
-              }
-              
-              // Обновляем сделку
-              const updatedDealResponse = await axios.put(`${baseUrl}/deals/${dealId}`, updateData, {
+              },
                 params: {
                   api_token: apiToken
                 },
