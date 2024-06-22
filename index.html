@@ -223,7 +223,7 @@
                 // const startTimeField = dealFields.find(field => field.name === 'Start Time');
                 // const endTimeField = dealFields.find(field => field.name === 'End Time');
                 // const assignedToField = dealFields.find(field => field.name === 'Assigned To');
-              console.log(phoneField, emailField, assignedToField);
+              // console.log(phoneField, emailField, assignedToField);
 
         const updatedDealResponse = await axios.put(`${baseUrl}/deals/${dealId}`, {
           [firstNameField.key]: firstName,
