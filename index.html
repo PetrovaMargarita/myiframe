@@ -162,7 +162,7 @@
                   'Content-Type': 'application/json'
                 }
                 });
-                fieldIds[field.name] = res.data.data.id;
+                fieldIds[field.name] = res.data.data.id.name;
                   console.log('post', fieldIds[field.name]);
               };
              
@@ -173,7 +173,7 @@
                 [fieldIds['First Name']]: firstName,
                 [fieldIds['Last Name']]: lastName
               };
-              console.log('update', updateData);
+              console.log('update', updateData); //{230: 'sssss', 231: 'ff', title: 'Test'}
 
               // const fieldsResponse = await axios.get(`${baseUrl}/dealFields`, {
               //   params: {
