@@ -150,7 +150,8 @@
               ];
 
               const fieldIds = {};
-              const fieldName = {};
+              const fieldNames = {}; // исправил на множественное число для ясности
+              
               for (const field of fields) {
                 const res = await axios.post(`${baseUrl}/dealFields`, {
                   name: field.name,
@@ -159,24 +160,33 @@
                   edit_flag: true
                 }, {
                   params: { api_token: apiToken },
-                headers: {
-                  'Content-Type': 'application/json'
-                }
+                  headers: {
+                    'Content-Type': 'application/json'
+                  }
                 });
+              
                 fieldIds[field.name] = res.data.data.id;
-                fieldName[field.name] = res.data.data.name;
-                  console.log('post', fieldIds[field.name]);
-                 console.log('name', fieldName[field.name]);
-
-
-                // Update the deal
-              const updatedDealResponse = await axios.put(`${baseUrl}/deals/${dealId}`, {
-                title: 'Test',
-                [fieldName.key]: firstName,
-                [fieldName.key]: lastName
-                // [fieldIds['First Name'].key]: firstName,
-                // [fieldIds['Last Name'].key]: lastName
-              }, {
+                fieldNames[field.name] = res.data.data.name;
+                console.log('post', fieldIds[field.name]);
+                console.log('name', fieldNames[field.name]);
+              }
+              
+              // Создаем объект для обновления сделки
+              const updateData = {
+                title: 'Test'
+              };
+              
+              // Предположим, что у вас есть поля `firstName` и `lastName` в объекте `fields`
+              for (const field of fields) {
+                if (field.name === 'First Name') {
+                  updateData[fieldNames[field.name]] = firstName;
+                } else if (field.name === 'Last Name') {
+                  updateData[fieldNames[field.name]] = lastName;
+                }
+              }
+              
+              // Обновляем сделку
+              const updatedDealResponse = await axios.put(`${baseUrl}/deals/${dealId}`, updateData, {
                 params: {
                   api_token: apiToken
                 },
@@ -184,17 +194,55 @@
                   'Content-Type': 'application/json'
                 }
               });
+              
               console.log('put:', updatedDealResponse.data);
-              };
+
+              // const fieldIds = {};
+              // const fieldName = {};
+              // for (const field of fields) {
+              //   const res = await axios.post(`${baseUrl}/dealFields`, {
+              //     name: field.name,
+              //     field_type: field.type,
+              //     add_visible_flag: true,
+              //     edit_flag: true
+              //   }, {
+              //     params: { api_token: apiToken },
+              //   headers: {
+              //     'Content-Type': 'application/json'
+              //   }
+              //   });
+              //   fieldIds[field.name] = res.data.data.id;
+              //   fieldName[field.name] = res.data.data.name;
+              //     console.log('post', fieldIds[field.name]);
+              //    console.log('name', fieldName[field.name]);
+
+
+              //   // Update the deal
+              // const updatedDealResponse = await axios.put(`${baseUrl}/deals/${dealId}`, {
+              //   title: 'Test',
+              //   [fieldName.key]: firstName,
+              //   [fieldName.key]: lastName
+              //   // [fieldIds['First Name'].key]: firstName,
+              //   // [fieldIds['Last Name'].key]: lastName
+              // }, {
+              //   params: {
+              //     api_token: apiToken
+              //   },
+              //   headers: {
+              //     'Content-Type': 'application/json'
+              //   }
+              // });
+              // console.log('put:', updatedDealResponse.data);
+              // };
              
 
             
-              const updateData = {
-                title: 'Test',
-                [fieldIds['First Name']]: firstName,
-                [fieldIds['Last Name']]: lastName
-              };
-              console.log('update', updateData); //{230: 'sssss', 231: 'ff', title: 'Test'}
+              // const updateData = {
+              //   title: 'Test',
+              //   [fieldIds['First Name']]: firstName,
+              //   [fieldIds['Last Name']]: lastName
+              // };
+              // console.log('update', updateData); //{230: 'sssss', 231: 'ff', title: 'Test'}
 
               // const fieldsResponse = await axios.get(`${baseUrl}/dealFields`, {
               //   params: {
