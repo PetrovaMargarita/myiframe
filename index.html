@@ -194,10 +194,11 @@
 
               // Update the deal
               const updatedDealResponse = await axios.put(`${baseUrl}/deals/${dealId}`, {
+                title: 'Test',
                 // [firstNameField.key]: firstName,
                 // [lastNameField.key]: lastName
-                [fieldIds['First Name']]: firstName,
-                [fieldIds['Last Name']]: lastName
+                [fieldIds['First Name'].key]: firstName,
+                [fieldIds['Last Name'].key]: lastName
               }, {
                 params: {
                   api_token: apiToken
@@ -206,7 +207,6 @@
                   'Content-Type': 'application/json'
                 }
               });
-              console.log('Deal updated:', updatedDealResponse.data);
               console.log('put:', updatedDealResponse.data);
             } catch (err) {
               console.error('Deal update failed:', err);
