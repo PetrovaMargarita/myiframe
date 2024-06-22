@@ -189,9 +189,9 @@
               const updatedDealResponse = await axios.put(`${baseUrl}/deals/${dealId}`, {
                 for (const field of fields) {
                 if (field.name === 'First Name') {
-                  updateData[fieldNames[field.name]] = firstName;
+                  updateData[fieldNames[field.name].key] = firstName;
                 } else if (field.name === 'Last Name') {
-                  updateData[fieldNames[field.name]] = lastName;
+                  updateData[fieldNames[field.name].key] = lastName;
                 }
               },
                 params: {
