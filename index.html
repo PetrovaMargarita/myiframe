@@ -167,9 +167,11 @@
               
                 fieldIds[field.name] = res.data.data.id;
                 fieldNames[field.name] = res.data.data.name;
+                const firstNameField = res.data.data.find(field => field.name === 'First Name');
                 console.log('post', fieldIds[field.name]);
                 console.log('name', fieldNames[field.name]);
               }
+              console.log(firstNameField);
               
               // Создаем объект для обновления сделки
               const updateData = {
