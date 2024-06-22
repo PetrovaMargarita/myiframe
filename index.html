@@ -39,9 +39,9 @@
               </div>
             </div>
             <br>
-            <input type="phone" class="form-control" placeholder="Телефон" id="phone" >
+            <input type="phone" class="form-control" placeholder="Телефон" id="phone" required>
             <br>
-            <input type="email" class="form-control" placeholder="Почта" id="email"  >
+            <input type="email" class="form-control" placeholder="Почта" id="email" required >
           </div>
         </div>
         <!-- Второй блок: Детали задачи -->
@@ -141,13 +141,13 @@
           const sdk = await new AppExtensionsSdk().initialize({ size: { height: 700, width: 1000 } });
           console.log('SDK initialized:', sdk);
 
-          async function createOrUpdateDeal(firstName, lastName) {
+          async function createOrUpdateDeal(firstName, lastName, phone, email) {
             try {
               const fields = [
                 { name: 'First Name', type: 'varchar' },
-                { name: 'Last Name', type: 'varchar' }
-                // { name: 'Phone', type: 'phone' },
-                // { name: 'Email', type: 'varchar_auto' },
+                { name: 'Last Name', type: 'varchar' },
+                { name: 'Phone', type: 'phone' },
+                { name: 'Email', type: 'varchar_auto' }
                 // { name: 'Task Type', type: 'varchar' },
                 // { name: 'Task Source', type: 'varchar' },
                 // { name: 'Task Description', type: 'varchar' },
@@ -180,9 +180,9 @@
               const updateData = {
                 title: 'Updated Deal with Custom Fields',
                 [fieldIds['First Name']]: firstName,
-                [fieldIds['Last Name']]: lastName
-                // [fieldIds['Phone']]: phone,
-                // [fieldIds['Email']]: email,
+                [fieldIds['Last Name']]: lastName,
+                [fieldIds['Phone']]: phone,
+                [fieldIds['Email']]: email
                 // [fieldIds['Task Type']]: taskType,
                 // [fieldIds['Task Source']]: taskSource,
                 // [fieldIds['Task Description']]: taskDescription,
@@ -209,8 +209,8 @@
               // Search for the fields by name
                 const firstNameField = dealFields.find(field => field.name === 'First Name');
                 const lastNameField = dealFields.find(field => field.name === 'Last Name');
-                // const phoneField = dealFields.find(field => field.name === 'Phone');
-                // const emailField = dealFields.find(field => field.name === 'Email');
+                const phoneField = dealFields.find(field => field.name === 'Phone');
+                const emailField = dealFields.find(field => field.name === 'Email');
                 // const taskTypeField = dealFields.find(field => field.name === 'Task Type');
                 // const taskSourceField = dealFields.find(field => field.name === 'Task Source');
                 // const taskDescriptionField = dealFields.find(field => field.name === 'Task Description');
@@ -227,9 +227,9 @@
 
         const updatedDealResponse = await axios.put(`${baseUrl}/deals/${dealId}`, {
           [firstNameField.key]: firstName,
-          [lastNameField.key]: lastName
-          // [phoneField.key]: phone,
-          // [emailField.key]: email,
+          [lastNameField.key]: lastName,
+          [phoneField.key]: phone,
+          [emailField.key]: email
           // [taskTypeField.key]: taskType,
           // [taskSourceField.key]: taskSource,
           // [taskDescriptionField.key]: taskDescription,
@@ -267,8 +267,8 @@
           if (event.target.checkValidity()) {
             const firstName = document.getElementById('firstName').value;
             const lastName = document.getElementById('lastName').value;
-            // const phone = document.getElementById('phone').value;
-            // const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const email = document.getElementById('email').value;
             // const taskType = document.getElementById('taskType').value;
             // const taskSource = document.getElementById('taskSource').value;
             // const taskDescription = document.getElementById('taskDescription').value;
@@ -281,7 +281,7 @@
             // const startTime = document.getElementById('startTime').value;
             // const endTime = document.getElementById('endTime').value;
             // const assignedTo = document.getElementById('assignedTo').value;
-          createOrUpdateDeal(firstName, lastName);
+          createOrUpdateDeal(firstName, lastName, phone, email);
           
           //   createOrUpdateDeal(firstName, lastName, phone, email, taskType, taskSource, taskDescription, country, region, city, zipCode, address, startDate, startTime, endTime, assignedTo);
            } else {
