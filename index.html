@@ -214,15 +214,19 @@
         document.getElementById('dealForm').addEventListener('submit', (event) => {
         event.preventDefault(); // Предотвращаем стандартное поведение отправки формы
 
-        // Проверяем валидность формы
-        if (event.target.checkValidity()) {
           const firstName = document.getElementById('firstName').value;
           const lastName = document.getElementById('lastName').value;
           createOrUpdateDeal(firstName, lastName);
-        } else {
-          // Если форма не валидна, показываем пользователю сообщение или выполняем нужные действия
-          console.log('Форма не прошла валидацию');
-        }
+
+        // Проверяем валидность формы
+        // if (event.target.checkValidity()) {
+        //   const firstName = document.getElementById('firstName').value;
+        //   const lastName = document.getElementById('lastName').value;
+        //   createOrUpdateDeal(firstName, lastName);
+        // } else {
+        //   // Если форма не валидна, показываем пользователю сообщение или выполняем нужные действия
+        //   console.log('Форма не прошла валидацию');
+        // }
       });
 
           document.getElementById('myButton').addEventListener('click', async () => {
