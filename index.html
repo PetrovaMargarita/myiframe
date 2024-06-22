@@ -169,13 +169,13 @@
 
             
               const updateData = {
-                title: 'Updated Deal with Custom Fields',
+                title: 'Test',
                 [fieldIds['First Name']]: firstName,
                 [fieldIds['Last Name']]: lastName
               };
               console.log(updateData);
 
-              const fieldsResponse = await axios.get(`${baseUrl}/dealFields`, {
+              const fieldsResponse = await axios.get(`${baseUrl}/dealFields`, updateData, {
                 params: {
                   api_token: apiToken
                 },
