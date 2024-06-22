@@ -21,13 +21,15 @@
   <!-- Bootstrap JS and dependencies -->
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@pipedrive/app-extensions-sdk@0.2.0-rc.0/dist/index.umd.js"></script>
+  
   <script>
-    document.addEventListener('DOMContentLoaded', async () => {
-      try {
-        const sdk = await new AppExtensionsSdk().initialize();
-        console.log('SDK initialized:', sdk);
+    document.addEventListener('DOMContentLoaded', () => {  
+      setTimeout(async () => {
+        try {
+          const sdk = await new AppExtensionsSdk().initialize({ size: { height: 700, width: 1000 } });
+          console.log('SDK initialized:', sdk);
 
-        document.getElementById('redirectButton').addEventListener('click', async () => {
+          document.getElementById('redirectButton').addEventListener('click', async () => {
           try {
             await sdk.execute(AppExtensionsSdk.Command.REDIRECT_TO, { view: AppExtensionsSdk.View.DEALS, id: 1 });
             console.log('Redirected to deal');
@@ -35,9 +37,11 @@
             console.error('Redirect failed:', error);
           }
         });
-      } catch (error) {
-        console.error('SDK initialization failed:', error);
-      }
+
+        } catch (error) {
+          console.error('SDK initialization failed:', error);
+        }
+      }, 5000);
     });
   </script>
 </body>
