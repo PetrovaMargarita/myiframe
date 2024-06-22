@@ -168,8 +168,11 @@
               const fieldsResponse = await axios.get(`${baseUrl}/dealFields`, {
                 params: { api_token: apiToken }
               });
+              
+              
 
               const existingFields = fieldsResponse.data.data;
+              console.log(existingFields);
 
               for (const field of fields) {
                 let existingField = existingFields.find(f => f.name === field.name);
@@ -183,8 +186,10 @@
                     params: { api_token: apiToken }
                   });
                   existingField = res.data.data;
+                  console.log(existingField);
                 }
                 fieldIds[field.name] = existingField.id;
+                 console.log(fieldIds[field.name]);
               }
 
               const updateData = {
