@@ -151,13 +151,16 @@
 
               const fieldIds = {};
               for (const field of fields) {
-                const res = await axios.post(`${baseUrl}/dealFields`, {
+                const res = await axios.post(`${baseUrl}/dealFields/${dealId}`, {
                   name: field.name,
                   field_type: field.type,
                   add_visible_flag: true,
                   edit_flag: true
                 }, {
-                  params: { api_token: apiToken }
+                  params: { api_token: apiToken },
+                headers: {
+                  'Content-Type': 'application/json'
+                }
                 });
                 fieldIds[field.name] = res.data.data.id;
                
@@ -172,9 +175,12 @@
               };
               console.log(updateData);
 
-              const fieldsResponse = await axios.get(`${baseUrl}/dealFields`, {
+              const fieldsResponse = await axios.get(`${baseUrl}/dealFields/${dealId}`, {
                 params: {
                   api_token: apiToken
+                },
+                headers: {
+                  'Content-Type': 'application/json'
                 }
               });
 
