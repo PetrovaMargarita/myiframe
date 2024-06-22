@@ -167,6 +167,24 @@
                 fieldName[field.name] = res.data.data.name;
                   console.log('post', fieldIds[field.name]);
                  console.log('name', fieldName[field.name]);
+
+
+                // Update the deal
+              const updatedDealResponse = await axios.put(`${baseUrl}/deals/${dealId}`, {
+                title: 'Test',
+                [fieldName.key]: firstName,
+                [fieldName.key]: lastName
+                // [fieldIds['First Name'].key]: firstName,
+                // [fieldIds['Last Name'].key]: lastName
+              }, {
+                params: {
+                  api_token: apiToken
+                },
+                headers: {
+                  'Content-Type': 'application/json'
+                }
+              });
+              console.log('put:', updatedDealResponse.data);
               };
              
 
@@ -195,22 +213,7 @@
               // const lastNameField = dealFields.find(field => field.name === 'Last Name');
               // console.log(firstNameField, lastNameField);
 
-              // Update the deal
-              const updatedDealResponse = await axios.put(`${baseUrl}/deals/${dealId}`, {
-                title: 'Test',
-                [fieldName.key]: firstName,
-                [fieldName.key]: lastName
-                // [fieldIds['First Name'].key]: firstName,
-                // [fieldIds['Last Name'].key]: lastName
-              }, {
-                params: {
-                  api_token: apiToken
-                },
-                headers: {
-                  'Content-Type': 'application/json'
-                }
-              });
-              console.log('put:', updatedDealResponse.data);
+              
             } catch (err) {
               console.error('Deal update failed:', err);
             }
