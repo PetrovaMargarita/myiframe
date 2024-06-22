@@ -138,6 +138,7 @@
 
       setTimeout(async () => {
         try {
+            const dealId = 1;
           const sdk = await new AppExtensionsSdk().initialize({ size: { height: 700, width: 1000 } });
           console.log('SDK initialized:', sdk);
 
@@ -163,7 +164,7 @@
               };
               console.log(res);
 
-              const dealId = 1;
+            
               const updateData = {
                 title: 'Updated Deal with Custom Fields',
                 [fieldIds['First Name']]: firstName,
