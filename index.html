@@ -258,17 +258,8 @@
       //window.location.href = 'https://testrita-sandbox.pipedrive.com/deal/1';
 
 
-document.getElementById('startButton').addEventListener('click', async () => {
-  try {
-    // Выполняем команду для закрытия модального окна
-    await sdk.execute(AppExtensionsSdk.Command.CLOSE_MODAL);
-    console.log("Modal closed successfully");
-
-    // Обновляем текущую страницу
+document.getElementById('startButton').addEventListener('click', () => {
     window.location.reload();
-  } catch (error) {
-    console.error("Failed to close modal or reload page:", error);
-  }
 });
           // document.getElementById('startButton').addEventListener('click', async () => {
           //    try {
