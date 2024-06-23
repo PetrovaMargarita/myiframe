@@ -264,6 +264,7 @@
           //       }
           // });
 document.getElementById('startButton').addEventListener('click', async () => {
+    window.location.href = 'https://testrita-sandbox.pipedrive.com/deal/1';
   try {
     await sdk.execute(AppExtensionsSdk.Command.CLOSE_MODAL);
     console.log("Modal closed successfully");
@@ -272,9 +273,6 @@ document.getElementById('startButton').addEventListener('click', async () => {
   }
 });
 
-sdk.on('modalClosed', () => {
-  window.location.href = 'https://testrita-sandbox.pipedrive.com/deal/1';
-});
        // document.getElementById('startButton').addEventListener('click', () => {
        //      // Перенаправление на указанный URL при нажатии на кнопку
        //      window.location.href = 'https://testrita-sandbox.pipedrive.com/deal/1';
