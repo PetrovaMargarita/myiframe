@@ -263,11 +263,18 @@
           //         console.error('Redirect failed:', error);
           //       }
           // });
-document.getElementById('startButton').addEventListener('click', () => {
-
+document.getElementById('startButton').addEventListener('click', async () => {
+  try {
+    console.log("Trying to close modal...");
     await sdk.execute(AppExtensionsSdk.Command.CLOSE_MODAL);
-    window.location.href = 'https://testrita-sandbox.pipedrive.com/deal/1';
+    console.log("Modal closed successfully");
 
+    // Использование sdk.router.go для перенаправления на нужную ссылку
+    sdk.router.go(`https://testrita-sandbox.pipedrive.com/deal/1`);
+    console.log("Redirecting user...");
+  } catch (error) {
+    console.error("Failed to close modal or redirect:", error);
+  }
 });
 
        // document.getElementById('startButton').addEventListener('click', () => {
