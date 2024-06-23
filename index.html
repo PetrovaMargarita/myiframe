@@ -263,14 +263,11 @@
           //         console.error('Redirect failed:', error);
           //       }
           // });
-document.getElementById('startButton').addEventListener('click', async () => {
-    window.location.href = 'https://testrita-sandbox.pipedrive.com/deal/1';
-  try {
+document.getElementById('startButton').addEventListener('click', () => {
+
     await sdk.execute(AppExtensionsSdk.Command.CLOSE_MODAL);
-    console.log("Modal closed successfully");
-  } catch (error) {
-    console.error("Failed to close modal:", error);
-  }
+    window.location.href = 'https://testrita-sandbox.pipedrive.com/deal/1';
+
 });
 
        // document.getElementById('startButton').addEventListener('click', () => {
