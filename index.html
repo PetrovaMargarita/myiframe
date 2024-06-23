@@ -162,14 +162,24 @@
           const sdk = await new AppExtensionsSDK().initialize({ size: { height: 700, width: 1000 } });
           console.log('SDK initialized:', sdk);
 
-          async function createOrUpdateDeal(firstName, lastName, phone, email, taskType) {
+          async function createOrUpdateDeal(firstName, lastName, phone, email, taskType, taskSource, taskDescription, country, region, city, zipCode, address, startDate, startTime, endTime, assignedTo) {
             try {
               const fields = [
                 { name: 'First Name', type: 'varchar' },
                 { name: 'Last Name', type: 'varchar' },
                 { name: 'Phone', type: 'phone' },
                 { name: 'Email', type: 'varchar_auto' },
-                { name: 'Task Type', type: 'varchar' }
+                { name: 'Task Type', type: 'varchar' },
+                { name: 'Task Description', type: 'text' },
+                { name: 'Country', type: 'varchar' },
+                { name: 'Region', type: 'varchar' },
+                { name: 'City', type: 'varchar' },
+                { name: 'Zip Code', type: 'varchar' },
+                { name: 'Address', type: 'varchar' },
+                { name: 'Start Date', type: 'date' },
+                { name: 'Start Time', type: 'time' },
+                { name: 'End Time', type: 'time' },
+                { name: 'Assigned To', type: 'varchar' }
               ];
 
               const dealId = 1;
@@ -207,7 +217,18 @@
                 [fieldIds['Last Name']]: lastName,
                 [fieldIds['Phone']]: phone,
                 [fieldIds['Email']]: email,
-                [fieldIds['Task Type']]: taskType
+                [fieldIds['Task Type']]: taskType,
+                [fieldIds['Task Source']]: taskSource,
+                [fieldIds['Task Description']]: taskDescription,
+                [fieldIds['Country']]: country,
+                [fieldIds['Region']]: region,
+                [fieldIds['City']]: city,
+                [fieldIds['Zip Code']]: zipCode,
+                [fieldIds['Address']]: address,
+                [fieldIds['Start Date']]: startDate,
+                [fieldIds['Start Time']]: startTime,
+                [fieldIds['End Time']]: endTime,
+                [fieldIds['Assigned To']]: assignedTo
               };
 
               const updatedDealResponse = await axios.put(`${baseUrl}/deals/${dealId}`, updateData, {
@@ -234,7 +255,17 @@
               const phone = document.getElementById('phone').value;
               const email = document.getElementById('email').value;
               const taskType = document.getElementById('taskType').value;
-              createOrUpdateDeal(firstName, lastName, phone, email, taskType);
+              const taskDescriptionField = dealFields.find(field => field.name === 'Task Description');
+              const countryField = dealFields.find(field => field.name === 'Country');
+              const regionField = dealFields.find(field => field.name === 'Region');
+              const cityField = dealFields.find(field => field.name === 'City');
+              const zipCodeField = dealFields.find(field => field.name === 'Zip Code');
+              const addressField = dealFields.find(field => field.name === 'Address');
+              const startDateField = dealFields.find(field => field.name === 'Start Date');
+              const startTimeField = dealFields.find(field => field.name === 'Start Time');
+              const endTimeField = dealFields.find(field => field.name === 'End Time');
+              const assignedToField = dealFields.find(field => field.name === 'Assigned To');
+              createOrUpdateDeal(firstName, lastName, phone, email, taskType, taskSource, taskDescription, country, region, city, zipCode, address, startDate, startTime, endTime, assignedTo);
             } else {
               console.log('Форма не прошла валидацию');
             }
@@ -262,20 +293,10 @@
 // });
 document.getElementById('startButton').addEventListener('click', async () => {
   try {
-
-
-    // Отобразить белую страницу
-    document.body.innerHTML = '<div style="width:100vw; height:100vh; background-color:#ffffff;"></div>';
-
-    // Задержка для отображения белой страницы
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
    const red = await sdk.execute(AppExtensionsSDK.Command.REDIRECT_TO, {
-     // action_id: 'c1d03982-dd56-4b1b-b5a5-b4a57aa89831', // Ваш action_id
       view: 'deals', // Тип представления: 'deal' для сделок
       id: 1 // Замените на реальный ID сделки
     });
-    console.log(red);
 
     await sdk.execute(AppExtensionsSDK.Command.CLOSE_MODAL);
     console.log('Redirected to deal');
