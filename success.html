@@ -27,7 +27,7 @@
     document.addEventListener('DOMContentLoaded', () => {  
       setTimeout(async () => {
         try {
-          const sdk = await new AppExtensionsSdk().initialize({ size: { height: 700, width: 1000  } });
+          const sdk = await new AppExtensionsSdk({ identifier: 'c1d03982-dd56-4b1b-b5a5-b4a57aa89831' }).initialize({ size: { height: 700, width: 1000  } });
           console.log('SDK initialized:', sdk);
 
           document.getElementById('redirectButton').addEventListener('click', async () => {
