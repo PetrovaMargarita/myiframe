@@ -23,6 +23,7 @@
   <script src="https://cdn.jsdelivr.net/npm/@pipedrive/app-extensions-sdk@0.2.0-rc.0/dist/index.umd.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', async () => {
+      console.log('DOMContentLoaded event fired');
       try {
         const sdk = await new AppExtensionsSdk().initialize({
           size: { height: 700, width: 1000 }, // если это необходимо
@@ -31,6 +32,7 @@
         console.log('SDK initialized:', sdk);
 
         document.getElementById('redirectButton').addEventListener('click', async () => {
+          console.log('Redirect button clicked');
           try {
             await sdk.execute(AppExtensionsSdk.Command.REDIRECT_TO, {
               view: AppExtensionsSdk.View.DEALS,
