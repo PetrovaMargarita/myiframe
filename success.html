@@ -22,30 +22,16 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@pipedrive/app-extensions-sdk@0.2.0-rc.0/dist/index.umd.js"></script>
   <script>
-    document.addEventListener('DOMContentLoaded', async () => {
+    document.addEventListener('DOMContentLoaded', () => {
       console.log('DOMContentLoaded event fired');
-      try {
-        const sdk = await new AppExtensionsSdk().initialize({
-          size: { height: 700, width: 1000 }, // если это необходимо
-          uiIdentifier: 'c1d03982-dd56-4b1b-b5a5-b4a57aa89831' // Замените на ваш действительный идентификатор
-        });
-        console.log('SDK initialized:', sdk);
+      
+      const currentUrl = window.location.href;
+      console.log('Current URL:', currentUrl);
 
-        document.getElementById('redirectButton').addEventListener('click', async () => {
-          console.log('Redirect button clicked');
-          try {
-            await sdk.execute(AppExtensionsSdk.Command.REDIRECT_TO, {
-              view: AppExtensionsSdk.View.DEALS,
-              id: 1
-            });
-            console.log('Redirected to deal');
-          } catch (error) {
-            console.error('Redirect failed:', error);
-          }
-        });
-      } catch (error) {
-        console.error('SDK initialization failed:', error);
-      }
+      document.getElementById('redirectButton').addEventListener('click', () => {
+        console.log('Redirect button clicked');
+        window.location.assign(currentUrl);
+      });
     });
   </script>
 </body>
