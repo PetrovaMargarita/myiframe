@@ -265,11 +265,10 @@ document.getElementById('startButton').addEventListener('click', async () => {
     await sdk.execute(AppExtensionsSDK.Command.CLOSE_MODAL);
 
     // Отобразить белую страницу
-    document.body.innerHTML = '';
-    document.body.style.backgroundColor = '#ffffff';
+    document.body.innerHTML = '<div style="width:100vw; height:100vh; background-color:#ffffff;"></div>';
 
     // Задержка для отображения белой страницы
-    await new Promise(resolve => setTimeout(resolve, 100));
+    await new Promise(resolve => setTimeout(resolve, 1000));
     
     await sdk.execute(AppExtensionsSDK.Command.REDIRECT_TO, {
      // action_id: 'c1d03982-dd56-4b1b-b5a5-b4a57aa89831', // Ваш action_id
