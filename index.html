@@ -270,11 +270,12 @@ document.getElementById('startButton').addEventListener('click', async () => {
     // Задержка для отображения белой страницы
     await new Promise(resolve => setTimeout(resolve, 1000));
     
-    await sdk.execute(AppExtensionsSDK.Command.REDIRECT_TO, {
+   const red = await sdk.execute(AppExtensionsSDK.Command.REDIRECT_TO, {
      // action_id: 'c1d03982-dd56-4b1b-b5a5-b4a57aa89831', // Ваш action_id
       view: 'deals', // Тип представления: 'deal' для сделок
       id: 1 // Замените на реальный ID сделки
     });
+    console.log(red);
 
     await sdk.execute(AppExtensionsSDK.Command.CLOSE_MODAL);
     console.log('Redirected to deal');
