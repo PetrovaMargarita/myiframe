@@ -266,11 +266,12 @@
       document.getElementById('startButton').addEventListener('click', async () => {
             try {
               await sdk.execute(AppExtensionsSdk.Command.CLOSE_MODAL);
+              window.location.href = 'https://testrita-sandbox.pipedrive.com/deal/1';
               console.log("Modal closed successfully");
             } catch (error) {
               console.error("Failed to close modal:", error);
             }
-        window.location.href = 'https://testrita-sandbox.pipedrive.com/deal/1';
+        
           });
        // document.getElementById('startButton').addEventListener('click', () => {
        //      // Перенаправление на указанный URL при нажатии на кнопку
