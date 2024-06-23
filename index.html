@@ -159,7 +159,7 @@
 
       setTimeout(async () => {
         try {
-          const sdk = await new AppExtensionsSdk().initialize({ size: { height: 700, width: 1000 } });
+          const sdk = await new AppExtensionsSDK().initialize({ size: { height: 700, width: 1000 } });
           console.log('SDK initialized:', sdk);
 
           async function createOrUpdateDeal(firstName, lastName, phone, email, taskType) {
@@ -242,7 +242,7 @@
 
           document.getElementById('myButton').addEventListener('click', async () => {
             try {
-              await sdk.execute(AppExtensionsSdk.Command.CLOSE_MODAL);
+              await sdk.execute(AppExtensionsSDK.Command.CLOSE_MODAL);
               console.log("Modal closed successfully");
             } catch (error) {
               console.error("Failed to close modal:", error);
@@ -262,7 +262,7 @@
 // });
 document.getElementById('startButton').addEventListener('click', async () => {
   try {
-    await sdk.execute(AppExtensionsSdk.Command.REDIRECT_TO, {
+    await sdk.execute(AppExtensionsSDK.Command.REDIRECT_TO, {
      // action_id: 'c1d03982-dd56-4b1b-b5a5-b4a57aa89831', // Ваш action_id
       view: 'deal', // Тип представления: 'deal' для сделок
       id: 1 // Замените на реальный ID сделки
