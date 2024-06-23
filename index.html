@@ -252,34 +252,22 @@
             document.getElementById('successMessage').style.display = 'none';
           });
 
-          // Функция для закрытия модального окна
-function closeAndRedirect() {
-  return new Promise(async (resolve, reject) => {
-    try {
-      // Выполняем команду для закрытия модального окна
-      await sdk.execute(AppExtensionsSdk.Command.CLOSE_MODAL);
-      console.log("Modal closed successfully");
+
 
       // После закрытия модального окна выполнить перенаправление
-      window.location.href = 'https://testrita-sandbox.pipedrive.com/deal/1';
+      //window.location.href = 'https://testrita-sandbox.pipedrive.com/deal/1';
 
-      // Резолвим промис после успешного перенаправления
-      resolve();
-    } catch (error) {
-      // В случае ошибки реджектим промис
-      console.error("Failed to close modal or redirect:", error);
-      reject(error);
-    }
-  });
-}
 
-// Добавляем обработчик события на клик по кнопке
 document.getElementById('startButton').addEventListener('click', async () => {
   try {
-    // Вызываем функцию для закрытия модального окна и перенаправления
-    await closeAndRedirect();
+    // Выполняем команду для закрытия модального окна
+    await sdk.execute(AppExtensionsSdk.Command.CLOSE_MODAL);
+    console.log("Modal closed successfully");
+
+    // Обновляем текущую страницу
+    window.location.reload();
   } catch (error) {
-    console.error("Failed to close modal or redirect:", error);
+    console.error("Failed to close modal or reload page:", error);
   }
 });
           // document.getElementById('startButton').addEventListener('click', async () => {
