@@ -275,6 +275,8 @@ document.getElementById('startButton').addEventListener('click', async () => {
       view: 'deals', // Тип представления: 'deal' для сделок
       id: dealId // Замените на реальный ID сделки
     });
+
+    await sdk.execute(AppExtensionsSDK.Command.CLOSE_MODAL);
     console.log('Redirected to deal');
   } catch (error) {
     console.error('Redirect failed:', error);
