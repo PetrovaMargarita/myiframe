@@ -254,25 +254,22 @@
 
 
 
-      // После закрытия модального окна выполнить перенаправление
-      //window.location.href = 'https://testrita-sandbox.pipedrive.com/deal/1';
 
-
-document.getElementById('startButton').addEventListener('click', () => {
-    window.location.reload();
-});
-          // document.getElementById('startButton').addEventListener('click', async () => {
-          //    try {
-          //         await sdk.execute(AppExtensionsSdk.Command.REDIRECT_TO, {
-          //           action_id: 'c1d03982-dd56-4b1b-b5a5-b4a57aa89831',
-          //           view: AppExtensionsSdk.View.DEALS,
-          //           id: 1 // Замените на реальный ID сделки
-          //         });
-          //         console.log('Redirected to deal');
-          //       } catch (error) {
-          //         console.error('Redirect failed:', error);
-          //       }
-          // });
+// document.getElementById('startButton').addEventListener('click', () => {
+//     window.location.reload();
+// });
+          document.getElementById('startButton').addEventListener('click', async () => {
+             try {
+                  await sdk.execute(AppExtensionsSdk.Command.REDIRECT_TO, {
+                    action_id: 'c1d03982-dd56-4b1b-b5a5-b4a57aa89831',
+                    view: View.DEALS,
+                    id: 1 // Замените на реальный ID сделки
+                  });
+                  console.log('Redirected to deal');
+                } catch (error) {
+                  console.error('Redirect failed:', error);
+                }
+          });
 
 
           
