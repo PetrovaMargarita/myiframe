@@ -25,12 +25,14 @@
     document.addEventListener('DOMContentLoaded', async () => {
       console.log('DOMContentLoaded event fired');
 
+      try { //{ identifier: 'c1d03982-dd56-4b1b-b5a5-b4a57aa89831' }
+
+        
              // Проверка наличия AppExtensionsSdk
           if (typeof AppExtensionsSdk === 'undefined') {
             console.error('AppExtensionsSdk is not defined');
             return;
           }
-      try { //{ identifier: 'c1d03982-dd56-4b1b-b5a5-b4a57aa89831' }
         const sdk = await new AppExtensionsSdk().initialize({ size: { height: 700, width: 1000 } });
         console.log('SDK initialized:', sdk);
 
