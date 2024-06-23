@@ -21,28 +21,29 @@
   <!-- Bootstrap JS and dependencies -->
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@pipedrive/app-extensions-sdk@0.2.0-rc.0/dist/index.umd.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
-  
   <script>
-    document.addEventListener('DOMContentLoaded', () => {  
-      setTimeout(async () => {
-        try {
-          const sdk = await new AppExtensionsSdk({ identifier: 'c1d03982-dd56-4b1b-b5a5-b4a57aa89831' }).initialize({ size: { height: 700, width: 1000  } });
-          console.log('SDK initialized:', sdk);
+    document.addEventListener('DOMContentLoaded', async () => {
+      try {
+        const sdk = await new AppExtensionsSdk().initialize({
+          size: { height: 700, width: 1000 }, // если это необходимо
+          uiIdentifier: 'your-custom-ui-identifier' // Замените на ваш действительный идентификатор
+        });
+        console.log('SDK initialized:', sdk);
 
-          document.getElementById('redirectButton').addEventListener('click', async () => {
+        document.getElementById('redirectButton').addEventListener('click', async () => {
           try {
-            await sdk.execute(AppExtensionsSdk.Command.REDIRECT_TO, { view: AppExtensionsSdk.View.DEALS, id: 1 });
+            await sdk.execute(AppExtensionsSdk.Command.REDIRECT_TO, {
+              view: AppExtensionsSdk.View.DEALS,
+              id: 1
+            });
             console.log('Redirected to deal');
           } catch (error) {
             console.error('Redirect failed:', error);
           }
         });
-
-        } catch (error) {
-          console.error('SDK initialization failed:', error);
-        }
-      }, 10000);
+      } catch (error) {
+        console.error('SDK initialization failed:', error);
+      }
     });
   </script>
 </body>
