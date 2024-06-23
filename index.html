@@ -134,7 +134,15 @@
     <div class="alert alert-success" role="alert">
       Сделка успешно обновлена!
     </div>
-    <button class="btn btn-primary" id="returnButton">Вернуться на главную</button>
+    <div class="row centered-buttons">
+        <div class="col">
+          <button class="btn btn-success" type="submit" id="startButton">Перейти к сделке</button>
+        </div>
+        <div class="col">
+          <button class="btn btn-primary" id="returnButton">Вернуться</button>
+        </div>
+      </div>
+    
   </div>
 
   <!-- Bootstrap JS and dependencies (not necessary for layout) -->
@@ -242,6 +250,15 @@
           document.getElementById('returnButton').addEventListener('click', () => {
             document.getElementById('dealForm').style.display = 'block';
             document.getElementById('successMessage').style.display = 'none';
+          });
+
+          document.getElementById('startButton').addEventListener('click', () => {
+            try {
+              await sdk.execute(AppExtensionsSdk.Command.CLOSE_MODAL);
+              console.log("Modal closed successfully");
+            } catch (error) {
+              console.error("Failed to close modal:", error);
+            }
           });
           
         } catch (error) {
