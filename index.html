@@ -155,6 +155,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const baseUrl = `https://${companyDomain}.pipedrive.com/api/v1`;  // URL для API
   
 function initializeDealForm() {
+  return new Promise((resolve, reject) => {
   setTimeout(async () => {  // Устанавливаем задержку
     try {
       // инициализируем SDK и указываем размеры модального окна
@@ -305,10 +306,15 @@ function initializeDealForm() {
       console.error('Ошибка иницилизации SDK:', error);
     }
   }, 5000); 
-  return true;
+   });
 }
-  initializeDealForm();
-  console.log(initializeDealForm);
+ initializeDealForm()
+  .then(result => {
+    console.log('Инициализация завершена успешно:', result);
+  })
+  .catch(error => {
+    console.error('Произошла ошибка при инициализации:', error);
+  });
 });
   </script>
 </body>
