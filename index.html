@@ -296,6 +296,7 @@ function initializeDealForm() {
             id: 1 
           });
           await sdk.execute(AppExtensionsSDK.Command.CLOSE_MODAL);
+          resolve(true);
           
         } catch (error) {
           console.error('Ошибка редиректа:', error);
@@ -303,6 +304,7 @@ function initializeDealForm() {
          // перезагружаем страницу чтоб обновились данные в сделке
       });
     } catch (error) {
+      reject(error);
       console.error('Ошибка иницилизации SDK:', error);
     }
   }, 5000); 
