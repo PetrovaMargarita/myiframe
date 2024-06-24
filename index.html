@@ -315,16 +315,17 @@ function initializeDealForm() {
 function initializeAndReload() {
   initializeDealForm()
     .then(result => {
+           // Задержка перед перезагрузкой страницы (необязательно)
+      setTimeout(() => {
+        console.log('Попытка перезагрузки страницы...');
+        reloadPage();
+      }, 1000);
       console.log('Инициализация завершена успешно:', result);
       
       // Добавляем класс к body
       document.body.classList.add('pink-background');
       
-      // Задержка перед перезагрузкой страницы (необязательно)
-      setTimeout(() => {
-        console.log('Попытка перезагрузки страницы...');
-        reloadPage();
-      }, 1000);
+ 
     })
     .catch(error => {
       console.error('Произошла ошибка при инициализации:', error);
