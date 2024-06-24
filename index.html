@@ -314,6 +314,7 @@ function initializeDealForm() {
 initializeDealForm()
   .then(result => {
     console.log('Инициализация завершена успешно:', result);
+    document.body.style.backgroundColor = 'pink';
     setTimeout(() => {
       window.location.reload();
     }, 5000); // Увеличьте время задержки при необходимости
