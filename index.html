@@ -246,7 +246,7 @@ document.addEventListener('DOMContentLoaded', () => {
           // Отображаем сообщение об успешном обновлении
           // document.getElementById('dealForm').style.display = 'none';
           // document.getElementById('successMessage').style.display = 'block';
-          await sdk.execute(Command.SHOW_SNACKBAR, {
+          await sdk.execute(AppExtensionsSDK.Command.SHOW_SNACKBAR, {
             message: 'Action completed',
             link: {
               url: 'https://app.pipedrive.com',
