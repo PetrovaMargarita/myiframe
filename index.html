@@ -154,6 +154,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const apiToken = '2fa5095f3ba3911496e097a4cfde2f150e097539';  // API токен аккаунта
   const baseUrl = `https://${companyDomain}.pipedrive.com/api/v1`;  // URL для API
   
+//создала функцию, которая будет возвращать промис(так как внутри асинхронные операции), чтоб определить успешность выполнения данной функции
 function initializeDealForm() {
   return new Promise((resolve, reject) => {
   setTimeout(async () => {  // Устанавливаем задержку
@@ -296,12 +297,11 @@ function initializeDealForm() {
             id: 1 
           });
           await sdk.execute(AppExtensionsSDK.Command.CLOSE_MODAL);
+          //после закрытия модально окна при успешном обновление, возвращаем функции true
           resolve(true);
-          
         } catch (error) {
           console.error('Ошибка редиректа:', error);
         }
-         // перезагружаем страницу чтоб обновились данные в сделке
       });
     } catch (error) {
       reject(error);
@@ -309,14 +309,13 @@ function initializeDealForm() {
     }
   }, 5000); 
    });
-}
+};
+  
  initializeDealForm()
   .then(result => {
-    console.log('Инициализация завершена успешно:', result);
+    // Перезагружаем страницу после выполнения всех операций
+     window.location.reload();
   })
-  .catch(error => {
-    console.error('Произошла ошибка при инициализации:', error);
-  });
 });
   </script>
 </body>
