@@ -302,15 +302,17 @@ document.addEventListener('DOMContentLoaded', () => {
       document.getElementById('startButton').addEventListener('click', async () => {
         try {
 
-          await sdk.execute(AppExtensionsSDK.Command.CLOSE_MODAL);
-          console.log('Redirected to deal');
+          
           // Перенаправляем на страницу сделки и закрываем модальное окно
           await sdk.execute(AppExtensionsSDK.Command.REDIRECT_TO, {
             view: 'deals',  // Тип представления: 'deal' для сделок
             id: 7  // Замените на реальный ID сделки
           });
 
-          
+          await sdk.execute(AppExtensionsSDK.Command.CLOSE_MODAL);
+           // Перезагружаем страницу
+          window.location.reload();
+          console.log('Redirected to deal');
    
         } catch (error) {
        
