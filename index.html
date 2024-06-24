@@ -152,172 +152,173 @@
   <script src="https://cdn.jsdelivr.net/npm/@pipedrive/app-extensions-sdk@0/dist/index.umd.js"></script>
   
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const companyDomain = 'testrita-sandbox';
-      const apiToken = '2fa5095f3ba3911496e097a4cfde2f150e097539';
-      const baseUrl = `https://${companyDomain}.pipedrive.com/api/v1`;
+// Ждём загрузки DOM контента
+document.addEventListener('DOMContentLoaded', () => {
+  const companyDomain = 'testrita-sandbox';  // Домен компании
+  const apiToken = '2fa5095f3ba3911496e097a4cfde2f150e097539';  // API токен
+  const baseUrl = `https://${companyDomain}.pipedrive.com/api/v1`;  // Базовый URL для API
 
-      setTimeout(async () => {
+  setTimeout(async () => {  // Устанавливаем задержку на 5 секунд
+    try {
+      // Инициализируем SDK
+      const sdk = await new AppExtensionsSDK().initialize({ size: { height: 700, width: 1000 } });
+      console.log('SDK initialized:', sdk);
+
+      // Функция для создания или обновления сделки
+      async function createOrUpdateDeal(firstName, lastName, phone, email, taskType, taskSource, taskDescription, country, region, city, zipCode, address, startDate, startTime, endTime, assignedTo) {
         try {
-          const sdk = await new AppExtensionsSDK().initialize({ size: { height: 700, width: 1000 } });
-          console.log('SDK initialized:', sdk);
+          const fields = [  // Определяем поля сделки
+            { name: 'First Name', type: 'varchar' },
+            { name: 'Last Name', type: 'varchar' },
+            { name: 'Phone', type: 'phone' },
+            { name: 'Email', type: 'varchar_auto' },
+            { name: 'Task Type', type: 'varchar' },
+            { name: 'Task Description', type: 'text' },
+            { name: 'Country', type: 'varchar' },
+            { name: 'Region', type: 'varchar' },
+            { name: 'City', type: 'varchar' },
+            { name: 'Zip Code', type: 'varchar' },
+            { name: 'Address', type: 'varchar' },
+            { name: 'Start Date', type: 'date' },
+            { name: 'Start Time', type: 'time' },
+            { name: 'End Time', type: 'time' },
+            { name: 'Assigned To', type: 'varchar' }
+          ];
 
-          async function createOrUpdateDeal(firstName, lastName, phone, email, taskType, taskSource, taskDescription, country, region, city, zipCode, address, startDate, startTime, endTime, assignedTo) {
-            try {
-              const fields = [
-                { name: 'First Name', type: 'varchar' },
-                { name: 'Last Name', type: 'varchar' },
-                { name: 'Phone', type: 'phone' },
-                { name: 'Email', type: 'varchar_auto' },
-                { name: 'Task Type', type: 'varchar' },
-                { name: 'Task Description', type: 'text' },
-                { name: 'Country', type: 'varchar' },
-                { name: 'Region', type: 'varchar' },
-                { name: 'City', type: 'varchar' },
-                { name: 'Zip Code', type: 'varchar' },
-                { name: 'Address', type: 'varchar' },
-                { name: 'Start Date', type: 'date' },
-                { name: 'Start Time', type: 'time' },
-                { name: 'End Time', type: 'time' },
-                { name: 'Assigned To', type: 'varchar' }
-              ];
+          const dealId = 1;  // Идентификатор сделки (тут статичный)
+          const fieldIds = {};
 
-              const dealId = 1;
-              const fieldIds = {};
+          // Получаем существующие поля
+          const fieldsResponse = await axios.get(`${baseUrl}/dealFields`, {
+            params: { api_token: apiToken }
+          });
 
-              // Получить существующие поля
-              const fieldsResponse = await axios.get(`${baseUrl}/dealFields`, {
+          const existingFields = fieldsResponse.data.data;
+          console.log(existingFields);
+
+          // Проверяем и создаём отсутствующие поля
+          for (const field of fields) {
+            let existingField = existingFields.find(f => f.name === field.name);
+            if (!existingField) {
+              const res = await axios.post(`${baseUrl}/dealFields`, {
+                name: field.name,
+                field_type: field.type,
+                add_visible_flag: true,
+                edit_flag: true
+              }, {
                 params: { api_token: apiToken }
               });
-
-              const existingFields = fieldsResponse.data.data;
-              console.log(existingFields);
-
-              for (const field of fields) {
-                let existingField = existingFields.find(f => f.name === field.name);
-                if (!existingField) {
-                  const res = await axios.post(`${baseUrl}/dealFields`, {
-                    name: field.name,
-                    field_type: field.type,
-                    add_visible_flag: true,
-                    edit_flag: true
-                  }, {
-                    params: { api_token: apiToken }
-                  });
-                  existingField = res.data.data;
-                  console.log(existingField);
-                }
-                fieldIds[field.name] = existingField.key;
-                console.log(fieldIds[field.name]);
-              }
-
-              const updateData = {
-                title: 'JOB #123',
-                [fieldIds['First Name']]: firstName,
-                [fieldIds['Last Name']]: lastName,
-                [fieldIds['Phone']]: phone,
-                [fieldIds['Email']]: email,
-                [fieldIds['Task Type']]: taskType,
-                [fieldIds['Task Source']]: taskSource,
-                [fieldIds['Task Description']]: taskDescription,
-                [fieldIds['Country']]: country,
-                [fieldIds['Region']]: region,
-                [fieldIds['City']]: city,
-                [fieldIds['Zip Code']]: zipCode,
-                [fieldIds['Address']]: address,
-                [fieldIds['Start Date']]: startDate,
-                [fieldIds['Start Time']]: startTime,
-                [fieldIds['End Time']]: endTime,
-                [fieldIds['Assigned To']]: assignedTo
-              };
-
-              const updatedDealResponse = await axios.put(`${baseUrl}/deals/${dealId}`, updateData, {
-                params: { api_token: apiToken },
-                headers: { 'Content-Type': 'application/json' }
-              });
-              console.log('Deal updated:', updatedDealResponse.data);
-
-              // Отображаем сообщение об успешном обновлении
-              document.getElementById('dealForm').style.display = 'none';
-              document.getElementById('successMessage').style.display = 'block';
-
-            } catch (err) {
-              console.error('Deal update failed:', err);
+              existingField = res.data.data;
+              console.log(existingField);
             }
+            fieldIds[field.name] = existingField.key;
+            console.log(fieldIds[field.name]);
           }
 
-          document.getElementById('dealForm').addEventListener('submit', (event) => {
-            event.preventDefault();
+          // Данные для обновления сделки
+          const updateData = {
+            title: 'JOB #123',
+            [fieldIds['First Name']]: firstName,
+            [fieldIds['Last Name']]: lastName,
+            [fieldIds['Phone']]: phone,
+            [fieldIds['Email']]: email,
+            [fieldIds['Task Type']]: taskType,
+            [fieldIds['Task Source']]: taskSource,
+            [fieldIds['Task Description']]: taskDescription,
+            [fieldIds['Country']]: country,
+            [fieldIds['Region']]: region,
+            [fieldIds['City']]: city,
+            [fieldIds['Zip Code']]: zipCode,
+            [fieldIds['Address']]: address,
+            [fieldIds['Start Date']]: startDate,
+            [fieldIds['Start Time']]: startTime,
+            [fieldIds['End Time']]: endTime,
+            [fieldIds['Assigned To']]: assignedTo
+          };
 
-            if (event.target.checkValidity()) {
-              const firstName = document.getElementById('firstName').value;
-              const lastName = document.getElementById('lastName').value;
-              const phone = document.getElementById('phone').value;
-              const email = document.getElementById('email').value;
-              const taskType = document.getElementById('taskType').value;
-              const taskSource = document.getElementById('taskSource').value;
-              const taskDescription = document.getElementById('taskDescription').value;
-              const country = document.getElementById('country').value;
-              const region = document.getElementById('region').value;
-              const city = document.getElementById('city').value;
-              const zipCode = document.getElementById('zipCode').value;
-              const address = document.getElementById('address').value;
-              const startDate = document.getElementById('startDate').value;
-              const startTime = document.getElementById('startTime').value;
-              const endTime = document.getElementById('endTime').value;
-              const assignedTo = document.getElementById('assignedTo').value;
-              createOrUpdateDeal(firstName, lastName, phone, email, taskType, taskSource, taskDescription, country, region, city, zipCode, address, startDate, startTime, endTime, assignedTo);
-            } else {
-              console.log('Форма не прошла валидацию');
-            }
+          // Обновляем сделку
+          const updatedDealResponse = await axios.put(`${baseUrl}/deals/${dealId}`, updateData, {
+            params: { api_token: apiToken },
+            headers: { 'Content-Type': 'application/json' }
           });
+          console.log('Deal updated:', updatedDealResponse.data);
 
-          document.getElementById('myButton').addEventListener('click', async () => {
-            try {
-              await sdk.execute(AppExtensionsSDK.Command.CLOSE_MODAL);
-              console.log("Modal closed successfully");
-            } catch (error) {
-              console.error("Failed to close modal:", error);
-            }
-          });
+          // Отображаем сообщение об успешном обновлении
+          document.getElementById('dealForm').style.display = 'none';
+          document.getElementById('successMessage').style.display = 'block';
 
-          document.getElementById('returnButton').addEventListener('click', () => {
-            document.getElementById('dealForm').style.display = 'block';
-            document.getElementById('successMessage').style.display = 'none';
-          });
-
-
-
-
-// document.getElementById('startButton').addEventListener('click', () => {
-//     window.location.reload();
-// });
-document.getElementById('startButton').addEventListener('click', async () => {
-  try {
-   const red = await sdk.execute(AppExtensionsSDK.Command.REDIRECT_TO, {
-      view: 'deals', // Тип представления: 'deal' для сделок
-      id: 1 // Замените на реальный ID сделки
-    });
-
-    await sdk.execute(AppExtensionsSDK.Command.CLOSE_MODAL);
-    console.log('Redirected to deal');
-  } catch (error) {
-    console.error('Redirect failed:', error);
-  }
-});
-
-
-          
-        } catch (error) {
-          console.error('SDK initialization failed:', error);
+        } catch (err) {
+          console.error('Deal update failed:', err);
         }
-      }, 5000);
+      }
 
+      // Обработчик формы сделки
+      document.getElementById('dealForm').addEventListener('submit', (event) => {
+        event.preventDefault();
 
+        if (event.target.checkValidity()) {
+          // Получаем значения из формы
+          const firstName = document.getElementById('firstName').value;
+          const lastName = document.getElementById('lastName').value;
+          const phone = document.getElementById('phone').value;
+          const email = document.getElementById('email').value;
+          const taskType = document.getElementById('taskType').value;
+          const taskSource = document.getElementById('taskSource').value;
+          const taskDescription = document.getElementById('taskDescription').value;
+          const country = document.getElementById('country').value;
+          const region = document.getElementById('region').value;
+          const city = document.getElementById('city').value;
+          const zipCode = document.getElementById('zipCode').value;
+          const address = document.getElementById('address').value;
+          const startDate = document.getElementById('startDate').value;
+          const startTime = document.getElementById('startTime').value;
+          const endTime = document.getElementById('endTime').value;
+          const assignedTo = document.getElementById('assignedTo').value;
+          // Вызываем функцию создания или обновления сделки
+          createOrUpdateDeal(firstName, lastName, phone, email, taskType, taskSource, taskDescription, country, region, city, zipCode, address, startDate, startTime, endTime, assignedTo);
+        } else {
+          console.log('Форма не прошла валидацию');
+        }
+      });
 
-    });
+      // Обработчик кнопки закрытия модального окна
+      document.getElementById('myButton').addEventListener('click', async () => {
+        try {
+          await sdk.execute(AppExtensionsSDK.Command.CLOSE_MODAL);
+          console.log("Modal closed successfully");
+        } catch (error) {
+          console.error("Failed to close modal:", error);
+        }
+      });
 
+      // Обработчик кнопки возврата к форме сделки
+      document.getElementById('returnButton').addEventListener('click', () => {
+        document.getElementById('dealForm').style.display = 'block';
+        document.getElementById('successMessage').style.display = 'none';
+      });
 
+      // Обработчик кнопки начала работы (перезагрузка окна)
+      document.getElementById('startButton').addEventListener('click', async () => {
+        try {
+          // Перенаправляем на страницу сделки и закрываем модальное окно
+          await sdk.execute(AppExtensionsSDK.Command.REDIRECT_TO, {
+            view: 'deals',  // Тип представления: 'deal' для сделок
+            id: 1  // Замените на реальный ID сделки
+          });
+
+          await sdk.execute(AppExtensionsSDK.Command.CLOSE_MODAL);
+          console.log('Redirected to deal');
+        } catch (error) {
+          console.error('Redirect failed:', error);
+        }
+      });
+
+    } catch (error) {
+      console.error('SDK initialization failed:', error);
+    }
+  }, 5000);  // Задержка 5 секунд
+
+});
   </script>
 </body>
 </html>
