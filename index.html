@@ -314,13 +314,20 @@ function initializeDealForm() {
 initializeDealForm()
   .then(result => {
     console.log('Инициализация завершена успешно:', result);
-    document.body.style.backgroundColor = 'pink';
-    // Переходим на другую страницу
-    window.location.href = 'https://petrovamargarita.github.io/myiframe/redirect.html';
+    
+    // Добавляем класс к body
+    document.body.classList.add('pink-background');
+    
+    // Задержка перед перезагрузкой страницы (необязательно увеличьте время, если страница не успевает перекраситься)
+    setTimeout(() => {
+      console.log('Перезагрузка страницы...');
+      window.location.reload();
+    }, 2000); // Увеличили время до 2 секунд для надежности
   })
   .catch(error => {
     console.error('Произошла ошибка при инициализации:', error);
   });
+
 
 });
   </script>
