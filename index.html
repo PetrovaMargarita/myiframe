@@ -297,6 +297,7 @@ function initializeDealForm() {
             id: 1 
           });
           await sdk.execute(AppExtensionsSDK.Command.CLOSE_MODAL);
+          window.location.href = 'https://www.google.com';
           //после закрытия модально окна при успешном обновление, возвращаем функции true
            resolve(true);
         } catch (error) {
@@ -311,15 +312,15 @@ function initializeDealForm() {
   }, 5000); 
    });
 };
-// Функция для инициализации и перезагрузки страницы
-function initializeAndReload() {
+// // Функция для инициализации и перезагрузки страницы
+// function initializeAndReload() {
   initializeDealForm()
     .then(result => {
-           // Задержка перед перезагрузкой страницы (необязательно)
-      setTimeout(() => {
-        console.log('Попытка перезагрузки страницы...');
-        reloadPage();
-      }, 1000);
+      //      // Задержка перед перезагрузкой страницы (необязательно)
+      // setTimeout(() => {
+      //   console.log('Попытка перезагрузки страницы...');
+      //   reloadPage();
+      // }, 1000);
       console.log('Инициализация завершена успешно:', result);
       
       // Добавляем класс к body
@@ -327,19 +328,19 @@ function initializeAndReload() {
       
  
     })
-    .catch(error => {
-      console.error('Произошла ошибка при инициализации:', error);
-    });
-}
+//     .catch(error => {
+//       console.error('Произошла ошибка при инициализации:', error);
+//     });
+// }
 
-// Функция для перезагрузки страницы
-function reloadPage() {
-  // Можно использовать любой из предложенных методов для перезагрузки страницы
-   window.location.href = 'https://www.google.com';
-}
+// // Функция для перезагрузки страницы
+// function reloadPage() {
+//   // Можно использовать любой из предложенных методов для перезагрузки страницы
+//    window.location.href = 'https://www.google.com';
+// }
 
-// Вызов функции инициализации и перезагрузки
-initializeAndReload();
+// // Вызов функции инициализации и перезагрузки
+// initializeAndReload();
 
 
 });
