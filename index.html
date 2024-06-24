@@ -246,8 +246,6 @@ document.addEventListener('DOMContentLoaded', () => {
       // обработчик для получение полей из формы в модальном окне
       document.getElementById('dealForm').addEventListener('submit', (event) => {
         event.preventDefault();
-
-        if (event.target.checkValidity()) {
           // получаем значения из формы
           const firstName = document.getElementById('firstName').value;
           const lastName = document.getElementById('lastName').value;
@@ -267,9 +265,6 @@ document.addEventListener('DOMContentLoaded', () => {
           const assignedTo = document.getElementById('assignedTo').value;
           // вызываем функцию создания или обновления сделки
           createOrUpdateDeal(firstName, lastName, phone, email, taskType, taskSource, taskDescription, country, region, city, zipCode, address, startDate, startTime, endTime, assignedTo);
-        } else {
-          console.log('Форма не прошла валидацию');
-        }
       });
 
       // обработчик кнопки закрытия модального окна
