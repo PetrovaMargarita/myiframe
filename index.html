@@ -239,6 +239,8 @@ document.addEventListener('DOMContentLoaded', () => {
           // отображаем сообщение об успешном обновлении
           document.getElementById('dealForm').style.display = 'none';
           document.getElementById('successMessage').style.display = 'block';
+
+          window.location.reload();
         } catch (err) {
           console.error('Не удалось обновить сделку:', err);
         }
@@ -297,9 +299,6 @@ document.addEventListener('DOMContentLoaded', () => {
           console.error('Ошибка редиректа:', error);
         }
          // перезагружаем страницу чтоб обновились данные в сделке
-           window.addEventListener('beforeunload', function (e) {
-            window.location.reload();
-        });
       });
     } catch (error) {
       console.error('Ошибка иницилизации SDK:', error);
