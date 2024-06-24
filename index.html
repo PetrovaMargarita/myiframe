@@ -244,15 +244,9 @@ document.addEventListener('DOMContentLoaded', () => {
           console.log('Deal updated:', updatedDealResponse.data);
 
           // Отображаем сообщение об успешном обновлении
-          // document.getElementById('dealForm').style.display = 'none';
-          // document.getElementById('successMessage').style.display = 'block';
-          await sdk.execute(AppExtensionsSDK.Command.SHOW_SNACKBAR, {
-            message: 'Action completed',
-            link: {
-              url: 'https://app.pipedrive.com',
-              label: 'View',
-            },
-          });
+          document.getElementById('dealForm').style.display = 'none';
+          document.getElementById('successMessage').style.display = 'block';
+
 
         } catch (err) {
           console.error('Deal update failed:', err);
@@ -307,14 +301,16 @@ document.addEventListener('DOMContentLoaded', () => {
       // Обработчик кнопки начала работы (перезагрузка окна)
       document.getElementById('startButton').addEventListener('click', async () => {
         try {
-          // Перенаправляем на страницу сделки и закрываем модальное окно
-          await sdk.execute(AppExtensionsSDK.Command.REDIRECT_TO, {
-            view: 'deals',  // Тип представления: 'deal' для сделок
-            id: 1  // Замените на реальный ID сделки
-          });
 
           await sdk.execute(AppExtensionsSDK.Command.CLOSE_MODAL);
           console.log('Redirected to deal');
+          // Перенаправляем на страницу сделки и закрываем модальное окно
+          await sdk.execute(AppExtensionsSDK.Command.REDIRECT_TO, {
+            view: 'deals',  // Тип представления: 'deal' для сделок
+            id: 7  // Замените на реальный ID сделки
+          });
+
+          
    
         } catch (error) {
        
