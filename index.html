@@ -255,16 +255,16 @@
               const phone = document.getElementById('phone').value;
               const email = document.getElementById('email').value;
               const taskType = document.getElementById('taskType').value;
-              const taskDescriptionField = dealFields.find(field => field.name === 'Task Description');
-              const countryField = dealFields.find(field => field.name === 'Country');
-              const regionField = dealFields.find(field => field.name === 'Region');
-              const cityField = dealFields.find(field => field.name === 'City');
-              const zipCodeField = dealFields.find(field => field.name === 'Zip Code');
-              const addressField = dealFields.find(field => field.name === 'Address');
-              const startDateField = dealFields.find(field => field.name === 'Start Date');
-              const startTimeField = dealFields.find(field => field.name === 'Start Time');
-              const endTimeField = dealFields.find(field => field.name === 'End Time');
-              const assignedToField = dealFields.find(field => field.name === 'Assigned To');
+              const taskDescriptionField = document.getElementById('taskDescriptionField').value;
+              const countryField = document.getElementById('countryField').value;
+              const regionField = document.getElementById('regionField').value;
+              const cityField = document.getElementById('cityField').value;
+              const zipCodeField = document.getElementById('zipCodeField').value;
+              const addressField = document.getElementById('addressField').value;
+              const startDateField = document.getElementById('startDateField').value;
+              const startTimeField = document.getElementById('startTimeField').value;
+              const endTimeField = document.getElementById('endTimeField').value;
+              const assignedToField = document.getElementById('assignedToField').value;T
               createOrUpdateDeal(firstName, lastName, phone, email, taskType, taskSource, taskDescription, country, region, city, zipCode, address, startDate, startTime, endTime, assignedTo);
             } else {
               console.log('Форма не прошла валидацию');
