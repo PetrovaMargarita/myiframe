@@ -315,10 +315,8 @@ initializeDealForm()
   .then(result => {
     console.log('Инициализация завершена успешно:', result);
     document.body.style.backgroundColor = 'pink';
-    setTimeout(() => {
-      window.location.reload();
-      console.log('ап');
-    }, 9000); // Увеличьте время задержки при необходимости
+    // Переходим на другую страницу
+    window.location.href = 'https://petrovamargarita.github.io/myiframe/redirect.html';
   })
   .catch(error => {
     console.error('Произошла ошибка при инициализации:', error);
