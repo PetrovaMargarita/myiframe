@@ -300,6 +300,8 @@ document.addEventListener('DOMContentLoaded', () => {
       // Обработчик кнопки начала работы (перезагрузка окна)
       document.getElementById('startButton').addEventListener('click', async () => {
         try {
+
+          await sdk.execute(AppExtensionsSDK.Command.SHOW_FLOATING_WINDOW);
           // Перенаправляем на страницу сделки и закрываем модальное окно
           await sdk.execute(AppExtensionsSDK.Command.REDIRECT_TO, {
             view: 'deals',  // Тип представления: 'deal' для сделок
