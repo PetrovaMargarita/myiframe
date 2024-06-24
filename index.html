@@ -308,7 +308,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
           await sdk.execute(AppExtensionsSDK.Command.CLOSE_MODAL);
           console.log('Redirected to deal');
-          const gotostart = 'true';
+          var gotostart = 'true';
         } catch (error) {
           var gotostart = 'false';
           console.error('Redirect failed:', error);
