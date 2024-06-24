@@ -153,7 +153,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const companyDomain = 'testrita-sandbox';  // мой компании
   const apiToken = '2fa5095f3ba3911496e097a4cfde2f150e097539';  // API токен аккаунта
   const baseUrl = `https://${companyDomain}.pipedrive.com/api/v1`;  // URL для API
-
+  
+function initializeDealForm() {
   setTimeout(async () => {  // Устанавливаем задержку
     try {
       // инициализируем SDK и указываем размеры модального окна
@@ -240,7 +241,7 @@ document.addEventListener('DOMContentLoaded', () => {
           document.getElementById('dealForm').style.display = 'none';
           document.getElementById('successMessage').style.display = 'block';
 
-          window.location.reload();
+       
         } catch (err) {
           console.error('Не удалось обновить сделку:', err);
         }
@@ -304,6 +305,9 @@ document.addEventListener('DOMContentLoaded', () => {
       console.error('Ошибка иницилизации SDK:', error);
     }
   }, 5000); 
+  return true;
+}
+  console.log(initializeDealForm);
 });
   </script>
 </body>
