@@ -297,7 +297,7 @@ function initializeDealForm() {
             id: 1 
           });
           await sdk.execute(AppExtensionsSDK.Command.CLOSE_MODAL);
-          window.location.href = 'https://www.google.com';
+          window.location.href = 'https://www.google.com'; //не работает
           //после закрытия модально окна при успешном обновление, возвращаем функции true
            resolve(true);
         } catch (error) {
@@ -316,7 +316,6 @@ function initializeDealForm() {
 // function initializeAndReload() {
   initializeDealForm()
     .then(result => {
-      //      // Задержка перед перезагрузкой страницы (необязательно)
       // setTimeout(() => {
       //   console.log('Попытка перезагрузки страницы...');
       //   reloadPage();
@@ -333,13 +332,12 @@ function initializeDealForm() {
 //     });
 // }
 
-// // Функция для перезагрузки страницы
+// // функция для перезагрузки страницы
 // function reloadPage() {
-//   // Можно использовать любой из предложенных методов для перезагрузки страницы
 //    window.location.href = 'https://www.google.com';
 // }
 
-// // Вызов функции инициализации и перезагрузки
+// ызов функции инициализации и перезагрузки
 // initializeAndReload();
 
 
