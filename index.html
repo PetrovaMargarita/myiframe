@@ -311,22 +311,34 @@ function initializeDealForm() {
   }, 5000); 
    });
 };
-initializeDealForm()
-  .then(result => {
-    console.log('Инициализация завершена успешно:', result);
-    
-    // Добавляем класс к body
-    document.body.classList.add('pink-background');
-    
-    // Задержка перед перезагрузкой страницы (необязательно увеличьте время, если страница не успевает перекраситься)
-    setTimeout(() => {
-      console.log('Перезагрузка страницы...');
-     location.reload(true);
-    }, 2000); // Увеличили время до 2 секунд для надежности
-  })
-  .catch(error => {
-    console.error('Произошла ошибка при инициализации:', error);
-  });
+// Функция для инициализации и перезагрузки страницы
+function initializeAndReload() {
+  initializeDealForm()
+    .then(result => {
+      console.log('Инициализация завершена успешно:', result);
+      
+      // Добавляем класс к body
+      document.body.classList.add('pink-background');
+      
+      // Задержка перед перезагрузкой страницы (необязательно)
+      setTimeout(() => {
+        console.log('Попытка перезагрузки страницы...');
+        reloadPage();
+      }, 1000);
+    })
+    .catch(error => {
+      console.error('Произошла ошибка при инициализации:', error);
+    });
+}
+
+// Функция для перезагрузки страницы
+function reloadPage() {
+  // Можно использовать любой из предложенных методов для перезагрузки страницы
+  location.reload(true); // Жесткая перезагрузка страницы, игнорирующая кэш
+}
+
+// Вызов функции инициализации и перезагрузки
+initializeAndReload();
 
 
 });
