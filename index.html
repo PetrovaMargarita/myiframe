@@ -298,11 +298,12 @@ function initializeDealForm() {
           });
           await sdk.execute(AppExtensionsSDK.Command.CLOSE_MODAL);
           //после закрытия модально окна при успешном обновление, возвращаем функции true
-          resolve(true);
+         
         } catch (error) {
           console.error('Ошибка редиректа:', error);
         }
       });
+      resolve(true);
     } catch (error) {
       reject(error);
       console.error('Ошибка иницилизации SDK:', error);
