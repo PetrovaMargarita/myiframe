@@ -255,16 +255,17 @@
               const phone = document.getElementById('phone').value;
               const email = document.getElementById('email').value;
               const taskType = document.getElementById('taskType').value;
-              const taskDescriptionField = document.getElementById('taskDescriptionField').value;
-              const countryField = document.getElementById('countryField').value;
-              const regionField = document.getElementById('regionField').value;
-              const cityField = document.getElementById('cityField').value;
-              const zipCodeField = document.getElementById('zipCodeField').value;
-              const addressField = document.getElementById('addressField').value;
-              const startDateField = document.getElementById('startDateField').value;
-              const startTimeField = document.getElementById('startTimeField').value;
-              const endTimeField = document.getElementById('endTimeField').value;
-              const assignedToField = document.getElementById('assignedToField').value;T
+              const taskSource = document.getElementById('taskSource').value;
+              const taskDescription = document.getElementById('taskDescription').value;
+              const country = document.getElementById('country').value;
+              const region = document.getElementById('region').value;
+              const city = document.getElementById('city').value;
+              const zipCode = document.getElementById('zipCode').value;
+              const address = document.getElementById('address').value;
+              const startDate = document.getElementById('startDate').value;
+              const startTime = document.getElementById('startTime').value;
+              const endTime = document.getElementById('endTime').value;
+              const endTime = assignedTo.getElementById('assignedTo').value;
               createOrUpdateDeal(firstName, lastName, phone, email, taskType, taskSource, taskDescription, country, region, city, zipCode, address, startDate, startTime, endTime, assignedTo);
             } else {
               console.log('Форма не прошла валидацию');
