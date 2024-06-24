@@ -310,12 +310,14 @@ function initializeDealForm() {
   }, 5000); 
    });
 };
-  
- initializeDealForm()
+  initializeDealForm()
   .then(result => {
-    // Перезагружаем страницу после выполнения всех операций
-     window.location.reload();
+    console.log('Инициализация завершена успешно:', result);
+    window.location.reload();
   })
+  .catch(error => {
+    console.error('Произошла ошибка при инициализации:', error);
+  });
 });
   </script>
 </body>
