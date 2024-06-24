@@ -244,8 +244,15 @@ document.addEventListener('DOMContentLoaded', () => {
           console.log('Deal updated:', updatedDealResponse.data);
 
           // Отображаем сообщение об успешном обновлении
-          document.getElementById('dealForm').style.display = 'none';
-          document.getElementById('successMessage').style.display = 'block';
+          // document.getElementById('dealForm').style.display = 'none';
+          // document.getElementById('successMessage').style.display = 'block';
+          await sdk.execute(Command.SHOW_SNACKBAR, {
+            message: 'Action completed',
+            link: {
+              url: 'https://app.pipedrive.com',
+              label: 'View',
+            },
+          });
 
         } catch (err) {
           console.error('Deal update failed:', err);
@@ -300,8 +307,6 @@ document.addEventListener('DOMContentLoaded', () => {
       // Обработчик кнопки начала работы (перезагрузка окна)
       document.getElementById('startButton').addEventListener('click', async () => {
         try {
-
-          await sdk.execute(AppExtensionsSDK.Command.SHOW_FLOATING_WINDOW);
           // Перенаправляем на страницу сделки и закрываем модальное окно
           await sdk.execute(AppExtensionsSDK.Command.REDIRECT_TO, {
             view: 'deals',  // Тип представления: 'deal' для сделок
@@ -310,9 +315,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
           await sdk.execute(AppExtensionsSDK.Command.CLOSE_MODAL);
           console.log('Redirected to deal');
-          var gotostart = 'true';
+   
         } catch (error) {
-          var gotostart = 'false';
+       
           console.error('Redirect failed:', error);
         }
       });
@@ -322,9 +327,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }, 5000);  // Задержка 5 секунд
 
-  if(gotostart == 'true'){
-  document.body.style.backgroundColor = 'pink';
-  }
   
 
 });
