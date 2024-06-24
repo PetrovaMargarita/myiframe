@@ -311,14 +311,17 @@ function initializeDealForm() {
   }, 5000); 
    });
 };
-  initializeDealForm()
+initializeDealForm()
   .then(result => {
     console.log('Инициализация завершена успешно:', result);
-    window.location.reload();
+    setTimeout(() => {
+      window.location.reload();
+    }, 1000); // Увеличьте время задержки при необходимости
   })
   .catch(error => {
     console.error('Произошла ошибка при инициализации:', error);
   });
+
 });
   </script>
 </body>
