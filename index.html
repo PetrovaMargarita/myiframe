@@ -293,10 +293,9 @@ document.addEventListener('DOMContentLoaded', () => {
           });
           await sdk.execute(AppExtensionsSDK.Command.CLOSE_MODAL);
            // перезагружаем страницу чтоб обновились данные в сделке
-            setTimeout(() => {
-            // перезагружаем страницу, чтоб обновились данные в сделке
+           window.addEventListener('beforeunload', function (e) {
             window.location.reload();
-        }, 500);
+        });
         } catch (error) {
           console.error('Ошибка редиректа:', error);
         }
