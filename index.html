@@ -292,13 +292,14 @@ document.addEventListener('DOMContentLoaded', () => {
             id: 1 
           });
           await sdk.execute(AppExtensionsSDK.Command.CLOSE_MODAL);
-           // перезагружаем страницу чтоб обновились данные в сделке
-           window.addEventListener('beforeunload', function (e) {
-            window.location.reload();
-        });
+          
         } catch (error) {
           console.error('Ошибка редиректа:', error);
         }
+         // перезагружаем страницу чтоб обновились данные в сделке
+           window.addEventListener('beforeunload', function (e) {
+            window.location.reload();
+        });
       });
     } catch (error) {
       console.error('Ошибка иницилизации SDK:', error);
