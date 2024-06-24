@@ -4,24 +4,22 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Bootstrap Form Layout</title>
-  
-  <!-- Bootstrap CSS -->
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
   
   <style>
     .custom-block {
-      height: 300px; /* Высота блоков */
-      width: 100%; /* Ширина блоков */
-      padding: 20px; /* Отступы внутри блоков */
+      height: 300px; 
+      width: 100%; 
+      padding: 20px;
     }
 
     .centered-buttons {
-      text-align: center; /* Выравниваем элементы по центру */
-      margin-top: 50px; /* Отступ сверху для наглядности */
+      text-align: center;
+      margin-top: 50px;
     }
 
     .success-message {
-      display: none; /* Изначально скрываем блок */
+      display: none;
       text-align: center;
       margin-top: 50px;
     }
@@ -31,7 +29,7 @@
   <form id="dealForm">
     <div class="container">
       <div class="row mt-3">
-        <!-- Первый блок: Детали клиента -->
+        <!-- Первый блок -->
         <div class="col-md-6">
           <div class="custom-block border">
             <h5>Детали клиента</h5>
@@ -49,65 +47,65 @@
             <input type="email" class="form-control" placeholder="Почта" id="email" required >
           </div>
         </div>
-        <!-- Второй блок: Детали задачи -->
+        <!-- Второй блок -->
         <div class="col-md-6">
           <div class="custom-block border">
             <h5>Детали задачи</h5>
             <div class="form-row">
               <div class="col">
-                <select class="form-control" id="taskType">
-                  <option value="" disabled selected>Тип задачи</option>
-                  <option value="Создать">Задача 1</option>
-                  <option value="Удалить">Задача 2</option>
+                <select class="form-control" id="taskType" required>
+                  <option disabled selected>Тип задачи</option>
+                  <option value="Срочная задача">Срочная задача</option>
+                  <option value="Несрочная задача">Несрочная задача</option>
                 </select>
               </div>
               <div class="col">
                 <select class="form-control" id="taskSource">
-                  <option value="" disabled selected>Источник задачи</option>
+                  <option disabled selected>Источник задачи</option>
                   <option value="Сайт">Сайт</option>
                   <option value="Звонок">Звонок</option>
                 </select>
               </div>
             </div>
             <br>
-            <textarea class="form-control" rows="4" id="taskDescription" placeholder="Описание задачи" ></textarea>
+            <textarea class="form-control" rows="4" id="taskDescription" placeholder="Описание задачи" required></textarea>
           </div>
         </div>
       </div>
       <br>
       <div class="row">
-        <!-- Третий блок: Место расположения -->
+        <!-- Третий блок -->
         <div class="col-md-6">
           <div class="custom-block border">
             <h5>Место расположения</h5>
-            <input type="text" class="form-control" id="country" placeholder="Страна" >
+            <input type="text" class="form-control" id="country" placeholder="Страна" required>
             <br>
-            <input type="text" class="form-control" id="region" placeholder="Область" >
+            <input type="text" class="form-control" id="region" placeholder="Область" required>
             <br>
             <div class="form-row">
               <div class="col">
-                <input type="text" class="form-control" id="city" placeholder="Город" >
+                <input type="text" class="form-control" id="city" placeholder="Город" required>
               </div>
               <div class="col">
-                <input type="text" class="form-control" id="zipCode" placeholder="Zip код" > 
+                <input type="text" class="form-control" id="zipCode" placeholder="Zip код" required> 
               </div>
             </div>
             <br>
-            <input type="text" class="form-control" id="address" placeholder="Адрес" >
+            <input type="text" class="form-control" id="address" placeholder="Адрес" required>
           </div>
         </div>
-        <!-- Четвертый блок: Время -->
+        <!-- Четвертый блок -->
         <div class="col-md-6">
           <div class="custom-block border">
             <h5>Время</h5>
-            <input type="date" class="form-control" id="startDate" placeholder="Дата старта" >
+            <input type="date" class="form-control" id="startDate" placeholder="Дата старта" required>
             <br>
             <div class="form-row">
               <div class="col">
-                <input type="time" class="form-control" id="startTime" placeholder="Начало времени" >
+                <input type="time" class="form-control" id="startTime" placeholder="Начало времени" required>
               </div>
               <div class="col">
-                <input type="time" class="form-control" id="endTime" placeholder="Конец времени" >
+                <input type="time" class="form-control" id="endTime" placeholder="Конец времени" required>
               </div>
             </div>
             <br>
@@ -132,7 +130,7 @@
 
   <div class="container success-message" id="successMessage">
     <div class="alert alert-success" role="alert">
-      Сделка успешно обновлена!
+      Поля успешно добавлены и обновлены!
     </div>
     <div class="row centered-buttons">
         <div class="col">
@@ -145,29 +143,27 @@
     
   </div>
 
-  <!-- Bootstrap JS and dependencies (not necessary for layout) -->
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
-<!--   <script src="https://cdn.jsdelivr.net/npm/@pipedrive/app-extensions-sdk@0.2.0-rc.0/dist/index.umd.js"></script> -->
   <script src="https://cdn.jsdelivr.net/npm/@pipedrive/app-extensions-sdk@0/dist/index.umd.js"></script>
   
   <script>
-// Ждём загрузки DOM контента
+// ожидаем загрузку DOM контента
 document.addEventListener('DOMContentLoaded', () => {
-  const companyDomain = 'testrita-sandbox';  // Домен компании
-  const apiToken = '2fa5095f3ba3911496e097a4cfde2f150e097539';  // API токен
-  const baseUrl = `https://${companyDomain}.pipedrive.com/api/v1`;  // Базовый URL для API
+  const companyDomain = 'testrita-sandbox';  // мой компании
+  const apiToken = '2fa5095f3ba3911496e097a4cfde2f150e097539';  // API токен аккаунта
+  const baseUrl = `https://${companyDomain}.pipedrive.com/api/v1`;  // URL для API
 
-  setTimeout(async () => {  // Устанавливаем задержку на 5 секунд
+  setTimeout(async () => {  // Устанавливаем задержку
     try {
-      // Инициализируем SDK
+      // инициализируем SDK и указываем размеры модального окна
       const sdk = await new AppExtensionsSDK().initialize({ size: { height: 700, width: 1000 } });
-      console.log('SDK initialized:', sdk);
 
-      // Функция для создания или обновления сделки
+      // создаем функцию для создания или обновления сделки, указываем параметры из поля ввода
       async function createOrUpdateDeal(firstName, lastName, phone, email, taskType, taskSource, taskDescription, country, region, city, zipCode, address, startDate, startTime, endTime, assignedTo) {
         try {
-          const fields = [  // Определяем поля сделки
+            // определяем поля сделки и указываем тип поля исходя из апи 
+          const fields = [
             { name: 'First Name', type: 'varchar' },
             { name: 'Last Name', type: 'varchar' },
             { name: 'Phone', type: 'phone' },
@@ -185,19 +181,19 @@ document.addEventListener('DOMContentLoaded', () => {
             { name: 'Assigned To', type: 'varchar' }
           ];
 
-          const dealId = 1;  // Идентификатор сделки (тут статичный)
+          const dealId = 1;  // идентификатор сделки(указала свою сделку по дефолту, видела в документации, что можно получить по запросу текущую сделку, но не понимала нужно ли это)
           const fieldIds = {};
-
-          // Получаем существующие поля
+          
+          // получаем существующие поля, используя библиотеку axios для отправки запроса 
           const fieldsResponse = await axios.get(`${baseUrl}/dealFields`, {
             params: { api_token: apiToken }
           });
-
+          //все поля которые получили, присваиваем переменной
           const existingFields = fieldsResponse.data.data;
-          console.log(existingFields);
 
-          // Проверяем и создаём отсутствующие поля
+          // проходим по каждому элементу в массиве, и проверяем элементы на дубли, если поля нет, то оно не создается
           for (const field of fields) {
+            //используем метод find для поиска в массиве existingFields элемента, у которого name совпадает с name текущего field
             let existingField = existingFields.find(f => f.name === field.name);
             if (!existingField) {
               const res = await axios.post(`${baseUrl}/dealFields`, {
@@ -209,13 +205,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 params: { api_token: apiToken }
               });
               existingField = res.data.data;
-              console.log(existingField);
             }
             fieldIds[field.name] = existingField.key;
-            console.log(fieldIds[field.name]);
           }
 
-          // Данные для обновления сделки
+          // данные для обновления сделки
           const updateData = {
             title: 'JOB #123',
             [fieldIds['First Name']]: firstName,
@@ -236,29 +230,25 @@ document.addEventListener('DOMContentLoaded', () => {
             [fieldIds['Assigned To']]: assignedTo
           };
 
-          // Обновляем сделку
+          // обновляем сделку
           const updatedDealResponse = await axios.put(`${baseUrl}/deals/${dealId}`, updateData, {
             params: { api_token: apiToken },
             headers: { 'Content-Type': 'application/json' }
           });
-          console.log('Deal updated:', updatedDealResponse.data);
 
-          // Отображаем сообщение об успешном обновлении
+          // отображаем сообщение об успешном обновлении
           document.getElementById('dealForm').style.display = 'none';
           document.getElementById('successMessage').style.display = 'block';
-
-
         } catch (err) {
-          console.error('Deal update failed:', err);
+          console.error('Не удалось обновить сделку:', err);
         }
       }
-
-      // Обработчик формы сделки
+      // обработчик для получение полей из формы в модальном окне
       document.getElementById('dealForm').addEventListener('submit', (event) => {
         event.preventDefault();
 
         if (event.target.checkValidity()) {
-          // Получаем значения из формы
+          // получаем значения из формы
           const firstName = document.getElementById('firstName').value;
           const lastName = document.getElementById('lastName').value;
           const phone = document.getElementById('phone').value;
@@ -275,58 +265,48 @@ document.addEventListener('DOMContentLoaded', () => {
           const startTime = document.getElementById('startTime').value;
           const endTime = document.getElementById('endTime').value;
           const assignedTo = document.getElementById('assignedTo').value;
-          // Вызываем функцию создания или обновления сделки
+          // вызываем функцию создания или обновления сделки
           createOrUpdateDeal(firstName, lastName, phone, email, taskType, taskSource, taskDescription, country, region, city, zipCode, address, startDate, startTime, endTime, assignedTo);
         } else {
           console.log('Форма не прошла валидацию');
         }
       });
 
-      // Обработчик кнопки закрытия модального окна
+      // обработчик кнопки закрытия модального окна
       document.getElementById('myButton').addEventListener('click', async () => {
         try {
           await sdk.execute(AppExtensionsSDK.Command.CLOSE_MODAL);
-          console.log("Modal closed successfully");
+          console.log("Окно успешно закрыто.");
         } catch (error) {
-          console.error("Failed to close modal:", error);
+          console.error("Ошибка при закрытии модального окна:", error);
         }
       });
 
-      // Обработчик кнопки возврата к форме сделки
+      // обработчик кнопки возврата к форме сделки
       document.getElementById('returnButton').addEventListener('click', () => {
         document.getElementById('dealForm').style.display = 'block';
         document.getElementById('successMessage').style.display = 'none';
       });
 
-      // Обработчик кнопки начала работы (перезагрузка окна)
+      // обработчик кнопки на возвращение текущей сделки, послеуспешного обновление илил добавление полей
       document.getElementById('startButton').addEventListener('click', async () => {
         try {
-
-          
-          // Перенаправляем на страницу сделки и закрываем модальное окно
+          // перенаправляем на страницу сделки и закрываем модальное окно
           await sdk.execute(AppExtensionsSDK.Command.REDIRECT_TO, {
-            view: 'deals',  // Тип представления: 'deal' для сделок
-            id: 7  // Замените на реальный ID сделки
+            view: 'deals', 
+            id: 1 
           });
-
           await sdk.execute(AppExtensionsSDK.Command.CLOSE_MODAL);
-           // Перезагружаем страницу
-          window.location.reload();
-          console.log('Redirected to deal');
-   
+           // перезагружаем страницу чтоб обновились данные в сделке
+            window.location.reload();
         } catch (error) {
-       
-          console.error('Redirect failed:', error);
+          console.error('Ошибка редиректа:', error);
         }
       });
-
     } catch (error) {
-      console.error('SDK initialization failed:', error);
+      console.error('Ошибка иницилизации SDK:', error);
     }
-  }, 5000);  // Задержка 5 секунд
-
-  
-
+  }, 5000); 
 });
   </script>
 </body>
