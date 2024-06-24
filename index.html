@@ -310,7 +310,7 @@ document.addEventListener('DOMContentLoaded', () => {
           console.log('Redirected to deal');
           const gotostart = 'true';
         } catch (error) {
-          const gotostart = 'false';
+          var gotostart = 'false';
           console.error('Redirect failed:', error);
         }
       });
